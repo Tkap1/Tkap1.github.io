@@ -45,8 +45,10 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
 
 	b.add_line("let button = undefined")
 	for f in list_of_files:
-		b.add_line("button = document.createElement(\"BUTTON\")");
-		b.add_line("button.addEventListener(\"click\", () => callback(\"%s\"));" % f)
+		b.add_line("button = document.createElement(\"BUTTON\");")
+		# b.add_line("button.addEventListener(\"click\", () => callback(\"%s\"));" % f)
+		# b.add_line("button.onclick=callback(%s);" % f)
+		b.add_line("button.onclick=() => callback(\"%s\");" % f)
 		b.add_line("button.textContent = \"%s\";" % f[0:f.find(".mp3")])
 		b.add_line("document.body.appendChild(button);")
 
