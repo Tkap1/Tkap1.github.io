@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+
+function callback(param)
+{
+	const audio = new Audio("http://localhost:8000/" + param);
+	audio.play();
+}
+
+const button1 = document.createElement("BUTTON");
+//button.addEventListener('click', callback);
+button1.addEventListener('click', () => callback("hello1"));
+button1.textContent = "Hello1";
+document.body.appendChild(button1);
+
+</script>
+
+</body>
+</html>
