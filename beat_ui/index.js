@@ -76,12 +76,13 @@ function frame(timestamp)
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		play button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
-		const x = 10;
+		const x = 100;
 		const y = 100;
 		const rect_size = 48;
 		const hovered = mouse_collides_rect(x, y, rect_size, rect_size);
 		ctx.fillStyle = "#5D5A53";
 		ctx.fillRect(x, y, rect_size, rect_size);
+		ctx.fillText("Play", 10, y + font_size / 2 + rect_size / 2);
 		if(hovered && is_mouse_pressed()) {
 			playing = !playing;
 			play_time = 0;
@@ -133,12 +134,13 @@ function frame(timestamp)
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		export button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
-		const x = 10;
+		const x = 300;
 		const y = 500;
 		const rect_size = 48;
 		const hovered = mouse_collides_rect(x, y, rect_size, rect_size);
 		ctx.fillStyle = "#5D5A53";
 		ctx.fillRect(x, y, rect_size, rect_size);
+		ctx.fillText("Copy to clipboard", 10, y + font_size / 2 + rect_size / 2);
 		if(hovered && is_mouse_pressed()) {
 			copy_loop_to_clipboard(bpm);
 		}
