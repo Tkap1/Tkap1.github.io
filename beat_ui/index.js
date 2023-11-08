@@ -1,4 +1,12 @@
 
+const e_ui = {
+	nothing: 0,
+	hover: 1,
+	press: 2,
+	active: 3,
+	cancel: 4,
+};
+
 document.querySelector("#app").innerHTML = `<canvas id="canvas"></canvas>`;
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
@@ -6,6 +14,10 @@ const active_columns = 16;
 const selected = [];
 const max_columns = 1024;
 const file_paths = ["../hihat_closed.mp3", "../hihat_opened.mp3", "../clap.mp3", "../kick.mp3"];
+const ui = {
+	hovered: 0,
+	pressed: 0,
+};
 let mouse_count = 0;
 let mouse_down = 0;
 let mouse_x = 0;
@@ -79,11 +91,14 @@ function frame(timestamp)
 		const x = 100;
 		const y = 100;
 		const rect_size = 48;
-		const hovered = mouse_collides_rect(x, y, rect_size, rect_size);
-		ctx.fillStyle = "#5D5A53";
+		const result = ui_button("play", x, y, rect_size, rect_size);
+		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 		ctx.fillRect(x, y, rect_size, rect_size);
+
+		ctx.fillStyle = "#5D5A53";
 		ctx.fillText("Play", 10, y + font_size / 2 + rect_size / 2);
-		if(hovered && is_mouse_pressed()) {
+
+		if(result == e_ui.active) {
 			playing = !playing;
 			play_time = 0;
 			curr_column = 0;
@@ -153,11 +168,15 @@ function frame(timestamp)
 		const x = 300;
 		const y = 500;
 		const rect_size = 48;
-		const hovered = mouse_collides_rect(x, y, rect_size, rect_size);
-		ctx.fillStyle = "#5D5A53";
+
+		const result = ui_button("copy to clipboard", x, y, rect_size, rect_size);
+		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 		ctx.fillRect(x, y, rect_size, rect_size);
+
+		ctx.fillStyle = "#5D5A53";
 		ctx.fillText("Copy to clipboard", 10, y + font_size / 2 + rect_size / 2);
-		if(hovered && is_mouse_pressed()) {
+
+		if(result == e_ui.active) {
 			copy_loop_to_clipboard(bpm);
 		}
 	}
@@ -274,9 +293,71 @@ function copy_loop_to_clipboard(bpm)
 	navigator.clipboard.writeText(text);
 }
 
+function hash(text)
+{
+	let hash = 5381;
+	for(let i = 0; i < text.length; i += 1) {
+		const c = text[i];
+		hash = ((hash << 5) + hash) + c;
+	}
+	return hash;
+}
+
+function ui_request_hovered(id)
+{
+	if(ui.pressed > 0) { return; }
+	ui.hovered = id;
+}
+
+function ui_request_pressed(id)
+{
+	ui.hovered = 0;
+	ui.pressed = id;
+}
+
 function ui_button(text, x, y, size_x, size_y)
 {
+	let result = e_ui.nothing;
+	const id = hash(text);
+	const hovered = mouse_collides_rect(x, y, size_x, size_y);
+	if(hovered) {
+		ui_request_hovered(id);
+	}
+	if(ui.hovered == id) {
+		result = e_ui.hover;
+		if(hovered) {
+			if(is_mouse_pressed()) {
+				ui_request_pressed(id);
+			}
+		}
+		else {
+			ui_request_hovered(0);
+		}
+	}
+	if(ui.pressed == id) {
+		result = e_ui.press;
+		if(is_mouse_released()) {
+			if(hovered) {
+				result = e_ui.active;
+			}
+			else {
+				result = e_ui.cancel;
+			}
+			ui_request_pressed(0);
+		}
+	}
+	return result;
+}
 
+function map_ui_to_color(arr, ui_state)
+{
+	if(ui_state == e_ui.hover) {
+		return arr[1];
+	}
+	if(ui_state == e_ui.press) {
+		return arr[2];
+	}
+	return arr[0];
 }
 
 init();
