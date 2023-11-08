@@ -3,6 +3,9 @@ document.querySelector("#app").innerHTML = `<canvas id="canvas"></canvas>`;
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const active_columns = 16;
+const selected = [];
+const max_columns = 1024;
+const file_paths = ["../hihat_closed.mp3", "../hihat_opened.mp3", "../clap.mp3", "../kick.mp3"];
 let mouse_count = 0;
 let mouse_down = 0;
 let mouse_x = 0;
@@ -13,9 +16,6 @@ let start_timestamp = 0;
 let first_frame = true;
 let curr_column = 0;
 let last_timestamp = 0
-const selected = [];
-const max_columns = 1024;
-const file_paths = ["../hihat_closed.mp3", "../hihat_opened.mp3", "../clap.mp3", "../kick.mp3"];
 
 function init()
 {
@@ -105,31 +105,47 @@ function frame(timestamp)
 		}
 	}
 
-	const start_y = 200;
-	for(let column_i = 0; column_i < active_columns; column_i += 1) {
-		for(let i = 0; i < 4; i += 1) {
-			const x = 250 + (rect_size + 16) * column_i;
-			const y = start_y + i * (rect_size + 16);
-			ctx.fillStyle = "#5D5A53";
-			const hovered = mouse_collides_rect(x, y, rect_size, rect_size);
-			if(hovered) {
-				ctx.fillStyle = "#FDDAA3"
-			}
-			else if(selected[column_i][i]) {
-				ctx.fillStyle = "#2C5B38";
-			}
-			if(hovered && is_mouse_pressed()) {
-				selected[column_i][i] = !selected[column_i][i];
-				var audio = new Audio(file_paths[i]);
-				audio.play();
-			}
-			ctx.fillRect(x, y, rect_size, rect_size);
+	{
+		const start_x = 250;
+		const start_y = 200;
 
-			if(column_i == 0) {
+		if(playing) {
+			const end_x = start_x + (active_columns - 1) * (rect_size + 16);
+			const percent = curr_column / (active_columns);
+			let x = lerp(start_x, end_x, percent);
+			x += (play_time / delay) * (rect_size + 16);
+			ctx.fillStyle = "#59AD34";
+			ctx.fillRect(x, start_y - 32, rect_size, rect_size * 4 + 64 + 48);
+		}
+
+		for(let column_i = 0; column_i < active_columns; column_i += 1) {
+			for(let i = 0; i < 4; i += 1) {
+				const x = start_x + (rect_size + 16) * column_i;
+				const y = start_y + i * (rect_size + 16);
 				ctx.fillStyle = "#5D5A53";
-				ctx.fillText(names[i], 10, start_y + i * (rect_size + 16) + rect_size / 2 + font_size / 2);
+				const hovered = mouse_collides_rect(x, y, rect_size, rect_size);
+				if(hovered) {
+					ctx.fillStyle = "#FDDAA3"
+				}
+				else if(selected[column_i][i]) {
+					ctx.fillStyle = "#2C5B38";
+				}
+				if(hovered && is_mouse_pressed()) {
+					selected[column_i][i] = !selected[column_i][i];
+					if(!playing && selected[column_i][i]) {
+						var audio = new Audio(file_paths[i]);
+						audio.play();
+					}
+				}
+				ctx.fillRect(x, y, rect_size, rect_size);
+
+				if(column_i == 0) {
+					ctx.fillStyle = "#5D5A53";
+					ctx.fillText(names[i], 10, start_y + i * (rect_size + 16) + rect_size / 2 + font_size / 2);
+				}
 			}
 		}
+
 	}
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		export button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -256,6 +272,11 @@ function copy_loop_to_clipboard(bpm)
 		}
 	}
 	navigator.clipboard.writeText(text);
+}
+
+function ui_button(text, x, y, size_x, size_y)
+{
+
 }
 
 init();
