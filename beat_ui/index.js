@@ -15,8 +15,8 @@ const selected = [];
 const max_columns = 1024;
 const file_paths = ["../hihat_closed.mp3", "../hihat_opened.mp3", "../clap.mp3", "../kick.mp3"];
 const ui = {
-	hovered: 0,
-	pressed: 0,
+	hover: 0,
+	press: 0,
 };
 let mouse_count = 0;
 let mouse_down = 0;
@@ -98,7 +98,7 @@ function frame(timestamp)
 		ctx.fillStyle = "#5D5A53";
 		ctx.fillText("Play", 10, y + font_size / 2 + rect_size / 2);
 
-		if(result == e_ui.active) {
+		if(result === e_ui.active) {
 			playing = !playing;
 			play_time = 0;
 			curr_column = 0;
@@ -137,24 +137,25 @@ function frame(timestamp)
 			for(let i = 0; i < 4; i += 1) {
 				const x = start_x + (rect_size + 16) * column_i;
 				const y = start_y + i * (rect_size + 16);
-				ctx.fillStyle = "#5D5A53";
-				const hovered = mouse_collides_rect(x, y, rect_size, rect_size);
-				if(hovered) {
-					ctx.fillStyle = "#FDDAA3"
+
+				let color_arr = ["#5D5A53", "#FDDAA3", "#2D2A23"];
+				if(selected[column_i][i]) {
+					color_arr = ["#2C5B38", "#4C7B58", "#0F3B18"];
 				}
-				else if(selected[column_i][i]) {
-					ctx.fillStyle = "#2C5B38";
-				}
-				if(hovered && is_mouse_pressed()) {
+
+				const result = ui_button(`sound${column_i}${i}`, x, y, rect_size, rect_size);
+				ctx.fillStyle = map_ui_to_color(color_arr, result);
+				ctx.fillRect(x, y, rect_size, rect_size);
+
+				if(result === e_ui.active) {
 					selected[column_i][i] = !selected[column_i][i];
 					if(!playing && selected[column_i][i]) {
 						var audio = new Audio(file_paths[i]);
 						audio.play();
 					}
 				}
-				ctx.fillRect(x, y, rect_size, rect_size);
 
-				if(column_i == 0) {
+				if(column_i === 0) {
 					ctx.fillStyle = "#5D5A53";
 					ctx.fillText(names[i], 10, start_y + i * (rect_size + 16) + rect_size / 2 + font_size / 2);
 				}
@@ -176,7 +177,7 @@ function frame(timestamp)
 		ctx.fillStyle = "#5D5A53";
 		ctx.fillText("Copy to clipboard", 10, y + font_size / 2 + rect_size / 2);
 
-		if(result == e_ui.active) {
+		if(result === e_ui.active) {
 			copy_loop_to_clipboard(bpm);
 		}
 	}
@@ -188,12 +189,12 @@ function frame(timestamp)
 
 function is_mouse_pressed()
 {
-	return (mouse_down && mouse_count == 1) || mouse_count > 1;
+	return (mouse_down && mouse_count === 1) || mouse_count > 1;
 }
 
 function is_mouse_released()
 {
-	return (!mouse_down && mouse_count == 1) || mouse_count > 1;
+	return (!mouse_down && mouse_count === 1) || mouse_count > 1;
 }
 
 function is_mouse_down()
@@ -297,22 +298,22 @@ function hash(text)
 {
 	let hash = 5381;
 	for(let i = 0; i < text.length; i += 1) {
-		const c = text[i];
+		const c = text.charCodeAt(i);
 		hash = ((hash << 5) + hash) + c;
 	}
 	return hash;
 }
 
-function ui_request_hovered(id)
+function ui_request_hover(id)
 {
-	if(ui.pressed > 0) { return; }
-	ui.hovered = id;
+	if(ui.press > 0) { return; }
+	ui.hover = id;
 }
 
-function ui_request_pressed(id)
+function ui_request_press(id)
 {
-	ui.hovered = 0;
-	ui.pressed = id;
+	ui.hover = 0;
+	ui.press = id;
 }
 
 function ui_button(text, x, y, size_x, size_y)
@@ -321,20 +322,20 @@ function ui_button(text, x, y, size_x, size_y)
 	const id = hash(text);
 	const hovered = mouse_collides_rect(x, y, size_x, size_y);
 	if(hovered) {
-		ui_request_hovered(id);
+		ui_request_hover(id);
 	}
-	if(ui.hovered == id) {
+	if(ui.hover === id) {
 		result = e_ui.hover;
 		if(hovered) {
 			if(is_mouse_pressed()) {
-				ui_request_pressed(id);
+				ui_request_press(id);
 			}
 		}
 		else {
-			ui_request_hovered(0);
+			ui_request_hover(0);
 		}
 	}
-	if(ui.pressed == id) {
+	if(ui.press === id) {
 		result = e_ui.press;
 		if(is_mouse_released()) {
 			if(hovered) {
@@ -343,7 +344,7 @@ function ui_button(text, x, y, size_x, size_y)
 			else {
 				result = e_ui.cancel;
 			}
-			ui_request_pressed(0);
+			ui_request_press(0);
 		}
 	}
 	return result;
@@ -351,10 +352,10 @@ function ui_button(text, x, y, size_x, size_y)
 
 function map_ui_to_color(arr, ui_state)
 {
-	if(ui_state == e_ui.hover) {
+	if(ui_state === e_ui.hover) {
 		return arr[1];
 	}
-	if(ui_state == e_ui.press) {
+	if(ui_state === e_ui.press) {
 		return arr[2];
 	}
 	return arr[0];
