@@ -72,7 +72,6 @@ function frame(timestamp)
 		const slider_width = 700;
 		const slider_height = 32;
 
-		// @TODO(tkap, 09/11/2023): use ui
 		const result = ui_button("bpm_slider", slider_x - 10, slider_y, slider_width + 20, slider_height);
 		if(result == e_ui.press) {
 			slider_percent = ilerp(slider_x, slider_x + slider_width, mouse_x);
