@@ -48,7 +48,7 @@ function init()
 
 function frame(timestamp)
 {
-	delta = (timestamp - last_timestamp) / 1000.0
+	delta = (timestamp - last_timestamp) / 1000.0;
 	last_timestamp = timestamp;
 	if(first_frame) {
 		first_frame = false;
@@ -72,6 +72,7 @@ function frame(timestamp)
 		const slider_width = 700;
 		const slider_height = 32;
 
+		// @TODO(tkap, 09/11/2023): use ui
 		const hovered = mouse_collides_rect(slider_x - 10, slider_y, slider_width + 20, slider_height);
 		if(hovered && is_mouse_down()) {
 			slider_percent = ilerp(slider_x, slider_x + slider_width, mouse_x);
@@ -124,14 +125,16 @@ function frame(timestamp)
 		const start_x = 250;
 		const start_y = 200;
 
-		if(playing) {
-			const end_x = start_x + (active_columns - 1) * (rect_size + 16);
-			const percent = curr_column / (active_columns);
-			let x = lerp(start_x, end_x, percent);
-			x += (play_time / delay) * (rect_size + 16);
-			ctx.fillStyle = "#59AD34";
-			ctx.fillRect(x, start_y - 32, rect_size, rect_size * 4 + 64 + 48);
-		}
+		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		play cursor start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+		// if(playing) {
+		// 	const end_x = start_x + (active_columns - 1) * (rect_size + 16);
+		// 	const percent = curr_column / (active_columns);
+		// 	let x = lerp(start_x, end_x, percent);
+		// 	x += (play_time / delay) * (rect_size + 16);
+		// 	ctx.fillStyle = "#59AD34";
+		// 	ctx.fillRect(x, start_y - 32, rect_size, rect_size * 4 + 64 + 48);
+		// }
+		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		play cursor end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 		for(let column_i = 0; column_i < active_columns; column_i += 1) {
 			const color_mod = Math.floor(column_i / 4) % 2;
@@ -143,10 +146,16 @@ function frame(timestamp)
 				if(selected[column_i][i]) {
 					color_arr = [rgb(0.173, 0.357, 0.220), rgb(0.298, 0.482, 0.345), rgb(0.059, 0.231, 0.094)];
 				}
+				let color_multiplier = 1.0;
 				if(color_mod == 1) {
-					for(let color_i = 0; color_i < color_arr.length; color_i += 1) {
-						multiply_color(color_arr[color_i], 0.5);
-					}
+					color_multiplier *= 0.5;
+				}
+				if(curr_column == column_i && playing) {
+					color_multiplier *= 3.0;
+				}
+
+				for(let color_i = 0; color_i < color_arr.length; color_i += 1) {
+					multiply_color(color_arr[color_i], color_multiplier);
 				}
 
 				const result = ui_button(`sound${column_i}${i}`, x, y, rect_size, rect_size);

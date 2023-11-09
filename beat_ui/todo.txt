@@ -1,0 +1,2 @@
+allow adding more beats
+allow for changing sounds
