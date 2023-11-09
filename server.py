@@ -17,6 +17,7 @@ class s_builder:
 def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
 	files = glob.glob("C:/Users/34687/Desktop/Dev/Python/twitch_bot/sounds/*.mp3")
 	list_of_files = []
+	list_str = ""
 	for f in files:
 		target = os.getcwd()
 		slash_index = f.rfind("\\")
@@ -26,6 +27,10 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
 		target += "/" + filename
 		shutil.copyfile(f, target)
 		list_of_files.append(filename)
+		list_str += filename[:filename.find(".mp3")] + "\n"
+
+	with open("list.txt", "w") as f:
+		f.write(list_str)
 
 	b = s_builder()
 	b.add_line("<!DOCTYPE html>")
@@ -57,7 +62,7 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
 		# b.add_line("button.onclick=callback(%s);" % f)
 		b.add_line("button.onclick=() => callback(\"%s\");" % f)
 		b.add_line("button.textContent = \"%s\";" % f[0:f.find(".mp3")])
-		b.add_line("button.style.width= \"200px\"");
+		b.add_line("button.style.width= \"200px\"")
 		# b.add_line("document.body.appendChild(button);")
 		b.add_line("d.appendChild(button);")
 

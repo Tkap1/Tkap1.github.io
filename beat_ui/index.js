@@ -11,11 +11,12 @@ document.querySelector("#app").innerHTML = `<canvas id="canvas"></canvas>`;
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const selected = [];
-const file_paths = ["../hihat_closed.mp3", "../hihat_opened.mp3", "../clap.mp3", "../kick.mp3"];
 const ui = {
 	hover: 0,
 	press: 0,
 };
+const file_names = [];
+const curr_sounds = [];
 let active_columns = 0;
 let mouse_count = 0;
 let mouse_down = 0;
@@ -41,6 +42,21 @@ function init()
 	document.addEventListener("mousedown", on_mouse_down);
 	window.addEventListener("resize", on_window_resize);
 
+	fetch("../list.txt")
+  .then((res) => res.text())
+  .then((text) => {
+		const lines = text.split("\r\n");
+		for(let i = 0; i < lines.length; i += 1) {
+			file_names.push(lines[i]);
+		}
+		curr_sounds[0] = get_sound_index_by_name("hihat_closed");
+		curr_sounds[1] = get_sound_index_by_name("hihat_open");
+		curr_sounds[2] = get_sound_index_by_name("clap");
+		curr_sounds[3] = get_sound_index_by_name("kick");
+   })
+  .catch((e) => console.error(e));
+
+
 	add_columns();
 
 	requestAnimationFrame(frame);
@@ -59,7 +75,6 @@ function frame(timestamp)
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = "#111111";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	const names = ["Closed HH", "Open HH", "Clap", "Kick"];
 	const rect_size = 48;
 	const font_size = 30;
 	const beat_padding = 16;
@@ -143,7 +158,7 @@ function frame(timestamp)
 
 		for(let i = 0; i < 4; i += 1) {
 			ctx.fillStyle = "#5D5A53";
-			ctx.fillText(names[i], 10, start_y + i * (rect_size + beat_padding) + rect_size / 2 + font_size / 2);
+			ctx.fillText(file_names[curr_sounds[i]], 10, start_y + i * (rect_size + beat_padding) + rect_size / 2 + font_size / 2);
 		}
 
 		ctx.save();
@@ -179,7 +194,7 @@ function frame(timestamp)
 				if(result === e_ui.active) {
 					selected[column_i][i] = !selected[column_i][i];
 					if(!playing && selected[column_i][i]) {
-						var audio = new Audio(file_paths[i]);
+						var audio = new Audio(sound_index_to_path(i));
 						audio.play();
 					}
 				}
@@ -348,7 +363,7 @@ function play_column(column)
 {
 	for(let i = 0; i < 4; i += 1) {
 		if(selected[column][i]) {
-			var audio = new Audio(file_paths[i]);
+			var audio = new Audio(sound_index_to_path(i));
 			audio.play();
 		}
 	}
@@ -474,6 +489,22 @@ function remove_columns()
 	if(active_columns > 16) {
 		active_columns -= 16;
 	}
+}
+
+function get_sound_index_by_name(name)
+{
+	for(let i = 0; i < file_names.length; i += 1) {
+		if(name === file_names[i]) {
+			return i;
+		}
+	}
+	console.assert(false);
+}
+
+function sound_index_to_path(index)
+{
+	console.assert(index >= 0 && index < 4);
+	return "../" + file_names[curr_sounds[index]] + ".mp3";
 }
 
 init();

@@ -1,1 +1,8 @@
 allow for changing sounds
+	the generated string has to change, because we have 200+ sounds
+		I guess we could do 3 hex digits?
+	how does the ui for this work??
+	how do we get a list of all sounds
+		just write a file
+
+UNDO/REDO
