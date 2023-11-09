@@ -432,6 +432,15 @@ function play_column(column)
 function copy_loop_to_clipboard(bpm)
 {
 	let text = `!beat 1 ${bpm} `;
+	for(let i = 0; i < 4; i += 1) {
+		text += `${curr_sounds[i]}`;
+		if(i < 3) {
+			text += ",";
+		}
+		else {
+			text += " ";
+		}
+	}
 	for(let column_i = 0; column_i < active_columns; column_i += 1) {
 		for(let i = 0; i < 4; i += 1) {
 			if(selected[column_i][i]) {
