@@ -134,17 +134,23 @@ function frame(timestamp)
 		}
 
 		for(let column_i = 0; column_i < active_columns; column_i += 1) {
+			const color_mod = Math.floor(column_i / 4) % 2;
 			for(let i = 0; i < 4; i += 1) {
 				const x = start_x + (rect_size + 16) * column_i;
 				const y = start_y + i * (rect_size + 16);
 
-				let color_arr = ["#5D5A53", "#FDDAA3", "#2D2A23"];
+				let color_arr = [rgb(0.365, 0.353, 0.325), rgb(0.992, 0.855, 0.639), rgb(0.176, 0.165, 0.137)];
 				if(selected[column_i][i]) {
-					color_arr = ["#2C5B38", "#4C7B58", "#0F3B18"];
+					color_arr = [rgb(0.173, 0.357, 0.220), rgb(0.298, 0.482, 0.345), rgb(0.059, 0.231, 0.094)];
+				}
+				if(color_mod == 1) {
+					for(let color_i = 0; color_i < color_arr.length; color_i += 1) {
+						multiply_color(color_arr[color_i], 0.5);
+					}
 				}
 
 				const result = ui_button(`sound${column_i}${i}`, x, y, rect_size, rect_size);
-				ctx.fillStyle = map_ui_to_color(color_arr, result);
+				ctx.fillStyle = rgb_to_hex_str(map_ui_to_color(color_arr, result));
 				ctx.fillRect(x, y, rect_size, rect_size);
 
 				if(result === e_ui.active) {
@@ -176,6 +182,7 @@ function frame(timestamp)
 
 		ctx.fillStyle = "#5D5A53";
 		ctx.fillText("Copy to clipboard", 10, y + font_size / 2 + rect_size / 2);
+		ctx.fillText("Paste into twitch chat!", 10, y + 200);
 
 		if(result === e_ui.active) {
 			copy_loop_to_clipboard(bpm);
@@ -359,6 +366,28 @@ function map_ui_to_color(arr, ui_state)
 		return arr[2];
 	}
 	return arr[0];
+}
+
+function rgb_to_hex_str(rgb)
+{
+	const r = rgb.r * 255;
+	const g = rgb.g * 255;
+	const b = rgb.b * 255;
+	const val = r << 16 | g << 8 | b;
+	return "#" + val.toString(16);
+}
+
+function multiply_color(rgb, mul)
+{
+	rgb.r = clamp(rgb.r * mul, 0, 1);
+	rgb.g = clamp(rgb.g * mul, 0, 1);
+	rgb.b = clamp(rgb.b * mul, 0, 1);
+	return rgb;
+}
+
+function rgb(r, g, b)
+{
+	return {r: r, g: g, b: b}
 }
 
 init();
