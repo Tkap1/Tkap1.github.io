@@ -109,7 +109,7 @@ function frame(timestamp)
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		play button end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-	const delay = 1.0 / (bpm / 60);
+	const delay = 1.0 / (bpm * 4 / 60);
 	if(playing) {
 		play_time += delta;
 		if(play_time >= delay) {
