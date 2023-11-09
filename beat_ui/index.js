@@ -19,6 +19,7 @@ const ui = {
 };
 const file_names = [];
 const curr_sounds = [];
+const max_rows = 8
 let active_columns = 0;
 let mouse_count = 0;
 let mouse_down = 0;
@@ -67,6 +68,10 @@ function init()
 		curr_sounds[1] = get_sound_index_by_name("hihat_open");
 		curr_sounds[2] = get_sound_index_by_name("clap");
 		curr_sounds[3] = get_sound_index_by_name("kick");
+		curr_sounds[4] = get_sound_index_by_name("pop");
+		curr_sounds[5] = get_sound_index_by_name("pop2");
+		curr_sounds[6] = get_sound_index_by_name("pop3");
+		curr_sounds[7] = get_sound_index_by_name("fart3");
    })
   .catch((e) => console.error(e));
 
@@ -169,7 +174,7 @@ function frame(timestamp)
 		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		play cursor end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-		for(let i = 0; i < 4; i += 1) {
+		for(let i = 0; i < max_rows; i += 1) {
 			const x = 10;
 			const y = start_y + i * (rect_size + beat_padding) + rect_size / 2 + font_size / 2;
 			const result = ui_button("sound_name" + i, x, y - font_size, 200, font_size * 1.5, 1);
@@ -182,12 +187,12 @@ function frame(timestamp)
 		}
 
 		ctx.save();
-		ctx.rect(start_x, start_y, canvas.width - start_x, (rect_size + beat_padding) * 4);
+		ctx.rect(start_x, start_y, canvas.width - start_x, (rect_size + beat_padding) * max_rows);
 		ctx.clip();
 
 		for(let column_i = 0; column_i < active_columns; column_i += 1) {
 			const color_mod = Math.floor(column_i / 4) % 2;
-			for(let i = 0; i < 4; i += 1) {
+			for(let i = 0; i < max_rows; i += 1) {
 				const x = start_x + (rect_size + beat_padding) * column_i - beat_scroll;
 				const y = start_y + i * (rect_size + beat_padding);
 
@@ -231,7 +236,7 @@ function frame(timestamp)
 		const rect_size = 48;
 
 		{
-			const y = 500;
+			const y = 720;
 			const result = ui_button("add_beats", x, y, rect_size, rect_size, 1);
 			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 			ctx.fillRect(x, y, rect_size, rect_size);
@@ -244,7 +249,7 @@ function frame(timestamp)
 		}
 
 		{
-			const y = 600;
+			const y = 780;
 			const result = ui_button("remove_beats", x, y, rect_size, rect_size, 1);
 			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 			ctx.fillRect(x, y, rect_size, rect_size);
@@ -262,7 +267,7 @@ function frame(timestamp)
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		export button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
 		const x = 300;
-		const y = 700;
+		const y = 840;
 		const rect_size = 48;
 
 		const result = ui_button("copy to clipboard", x, y, rect_size, rect_size, 1);
@@ -427,7 +432,7 @@ function get_seconds(timestamp)
 
 function play_column(column)
 {
-	for(let i = 0; i < 4; i += 1) {
+	for(let i = 0; i < max_rows; i += 1) {
 		if(selected[column][i]) {
 			var audio = new Audio(sound_index_to_path(i));
 			audio.play();
@@ -438,9 +443,9 @@ function play_column(column)
 function copy_loop_to_clipboard(bpm)
 {
 	let text = `!beat 1 ${bpm} `;
-	for(let i = 0; i < 4; i += 1) {
+	for(let i = 0; i < max_rows; i += 1) {
 		text += `${curr_sounds[i]}`;
-		if(i < 3) {
+		if(i < 7) {
 			text += ",";
 		}
 		else {
@@ -448,7 +453,7 @@ function copy_loop_to_clipboard(bpm)
 		}
 	}
 	for(let column_i = 0; column_i < active_columns; column_i += 1) {
-		for(let i = 0; i < 4; i += 1) {
+		for(let i = 0; i < max_rows; i += 1) {
 			if(selected[column_i][i]) {
 				text += `${i + 1}`;
 			}
@@ -581,7 +586,7 @@ function get_sound_index_by_name(name)
 
 function sound_index_to_path(index)
 {
-	console.assert(index >= 0 && index < 4);
+	console.assert(index >= 0 && index < max_rows);
 	return "../" + file_names[curr_sounds[index]] + ".mp3";
 }
 
