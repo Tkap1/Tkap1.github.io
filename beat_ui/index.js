@@ -10,24 +10,26 @@ const e_ui = {
 document.querySelector("#app").innerHTML = `<canvas id="canvas"></canvas>`;
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
-const active_columns = 16;
 const selected = [];
-const max_columns = 1024;
 const file_paths = ["../hihat_closed.mp3", "../hihat_opened.mp3", "../clap.mp3", "../kick.mp3"];
 const ui = {
 	hover: 0,
 	press: 0,
 };
+let active_columns = 0;
 let mouse_count = 0;
 let mouse_down = 0;
 let mouse_x = 0;
 let mouse_y = 0;
+let prev_mouse_x = 0;
+let prev_mouse_y = 0;
 let slider_percent = 0.25;
 let playing = false;
 let start_timestamp = 0;
 let first_frame = true;
 let curr_column = 0;
 let last_timestamp = 0
+let beat_scroll = 0;
 
 function init()
 {
@@ -39,9 +41,7 @@ function init()
 	document.addEventListener("mousedown", on_mouse_down);
 	window.addEventListener("resize", on_window_resize);
 
-	for(let i = 0; i < max_columns; i += 1) {
-		selected[i] = [false, false, false, false];
-	}
+	add_columns();
 
 	requestAnimationFrame(frame);
 }
@@ -54,11 +54,15 @@ function frame(timestamp)
 		first_frame = false;
 		start_timestamp = timestamp;
 	}
+
+	ctx.reset();
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = "#111111";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	const names = ["Closed HH", "Open HH", "Clap", "Kick"];
 	const rect_size = 48;
 	const font_size = 30;
+	const beat_padding = 16;
 
 	ctx.font = `${font_size}px Arial`;
 
@@ -127,20 +131,30 @@ function frame(timestamp)
 
 		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		play cursor start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 		// if(playing) {
-		// 	const end_x = start_x + (active_columns - 1) * (rect_size + 16);
+		// 	const end_x = start_x + (active_columns - 1) * (rect_size + beat_padding);
 		// 	const percent = curr_column / (active_columns);
 		// 	let x = lerp(start_x, end_x, percent);
-		// 	x += (play_time / delay) * (rect_size + 16);
+		// 	x += (play_time / delay) * (rect_size + beat_padding);
 		// 	ctx.fillStyle = "#59AD34";
 		// 	ctx.fillRect(x, start_y - 32, rect_size, rect_size * 4 + 64 + 48);
 		// }
 		// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		play cursor end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+
+		for(let i = 0; i < 4; i += 1) {
+			ctx.fillStyle = "#5D5A53";
+			ctx.fillText(names[i], 10, start_y + i * (rect_size + beat_padding) + rect_size / 2 + font_size / 2);
+		}
+
+		ctx.save();
+		ctx.rect(start_x, start_y, canvas.width - start_x, (rect_size + beat_padding) * 4);
+		ctx.clip();
+
 		for(let column_i = 0; column_i < active_columns; column_i += 1) {
 			const color_mod = Math.floor(column_i / 4) % 2;
 			for(let i = 0; i < 4; i += 1) {
-				const x = start_x + (rect_size + 16) * column_i;
-				const y = start_y + i * (rect_size + 16);
+				const x = start_x + (rect_size + beat_padding) * column_i - beat_scroll;
+				const y = start_y + i * (rect_size + beat_padding);
 
 				let color_arr = [rgb(0.365, 0.353, 0.325), rgb(0.992, 0.855, 0.639), rgb(0.176, 0.165, 0.137)];
 				if(selected[column_i][i]) {
@@ -169,20 +183,51 @@ function frame(timestamp)
 						audio.play();
 					}
 				}
+			}
+		}
 
-				if(column_i === 0) {
-					ctx.fillStyle = "#5D5A53";
-					ctx.fillText(names[i], 10, start_y + i * (rect_size + 16) + rect_size / 2 + font_size / 2);
-				}
+		ctx.restore();
+
+	}
+
+	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		add more beats start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	{
+		const x = 300;
+		const rect_size = 48;
+
+		{
+			const y = 500;
+			const result = ui_button("add_beats", x, y, rect_size, rect_size);
+			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
+			ctx.fillRect(x, y, rect_size, rect_size);
+			ctx.fillStyle = "#5D5A53";
+			ctx.fillText("Add beats", 10, y + font_size / 2 + rect_size / 2);
+
+			if(result == e_ui.active) {
+				add_columns();
+			}
+		}
+
+		{
+			const y = 600;
+			const result = ui_button("remove_beats", x, y, rect_size, rect_size);
+			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
+			ctx.fillRect(x, y, rect_size, rect_size);
+			ctx.fillStyle = "#5D5A53";
+			ctx.fillText("Remove beats", 10, y + font_size / 2 + rect_size / 2);
+
+			if(result == e_ui.active) {
+				remove_columns();
 			}
 		}
 
 	}
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		add more beats end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		export button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
 		const x = 300;
-		const y = 500;
+		const y = 700;
 		const rect_size = 48;
 
 		const result = ui_button("copy to clipboard", x, y, rect_size, rect_size);
@@ -191,13 +236,24 @@ function frame(timestamp)
 
 		ctx.fillStyle = "#5D5A53";
 		ctx.fillText("Copy to clipboard", 10, y + font_size / 2 + rect_size / 2);
-		ctx.fillText("Paste into twitch chat!", 10, y + 200);
+		ctx.fillText("Paste into twitch chat!", 10, y + 150);
 
 		if(result === e_ui.active) {
 			copy_loop_to_clipboard(bpm);
 		}
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		export button end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	{
+		const result = ui_button("beat_scroll", 0, 0, canvas.width, canvas.height);
+		if(result == e_ui.press) {
+			beat_scroll -= mouse_x - prev_mouse_x;
+			beat_scroll = clamp(beat_scroll, 0, (rect_size + beat_padding) * (active_columns - 16));
+		}
+	}
+
+	prev_mouse_x = mouse_x;
+	prev_mouse_y = mouse_y;
 
 	mouse_count = 0;
 	requestAnimationFrame(frame);
@@ -328,6 +384,7 @@ function ui_request_hover(id)
 
 function ui_request_press(id)
 {
+	if(id !== 0 && ui.press !== 0) { return; }
 	ui.hover = 0;
 	ui.press = id;
 }
@@ -397,6 +454,22 @@ function multiply_color(rgb, mul)
 function rgb(r, g, b)
 {
 	return {r: r, g: g, b: b}
+}
+
+function add_columns()
+{
+	new_value = active_columns + 16;
+	for(let i = active_columns; i < new_value; i += 1) {
+		selected[i] = [false, false, false, false];
+	}
+	active_columns = new_value;
+}
+
+function remove_columns()
+{
+	if(active_columns > 16) {
+		active_columns -= 16;
+	}
 }
 
 init();
