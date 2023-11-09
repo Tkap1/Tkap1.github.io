@@ -53,7 +53,13 @@ function init()
 	fetch("../list.txt")
   .then((res) => res.text())
   .then((text) => {
-		const lines = text.split("\r\n");
+		let lines = text.split("\r\n");
+
+		// @Note(tkap, 09/11/2023): Without this it works on my pc, but not on gitub. I guess the fetch keeps \r on my pc
+		// but not on github??
+		if(lines.length <= 1) {
+			lines = text.split("\n");
+		}
 		for(let i = 0; i < lines.length; i += 1) {
 			file_names.push(lines[i]);
 		}
