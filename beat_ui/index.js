@@ -283,8 +283,8 @@ function frame(timestamp)
 		const result = ui_button("beat_scroll", 0, 0, canvas.width, canvas.height, 0);
 		if(result == e_ui.press) {
 			beat_scroll -= mouse_x - prev_mouse_x;
-			beat_scroll = clamp(beat_scroll, 0, (rect_size + beat_padding) * (active_columns - 16));
 		}
+		beat_scroll = clamp(beat_scroll, 0, (rect_size + beat_padding) * (active_columns - 16));
 	}
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		choosing sound start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv

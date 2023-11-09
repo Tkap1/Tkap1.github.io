@@ -3,3 +3,6 @@
 UNDO/REDO
 
 handle clicking outside to close choosing sound menu
+	not having this makes us able to scroll the beat while selecting sounds
+
+clipped beat buttons and sounds to choose can still be clicked
