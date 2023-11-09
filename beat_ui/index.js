@@ -281,18 +281,22 @@ function is_mouse_up()
 
 function on_mouse_down(e)
 {
-	mouse_x = e.clientX;
-	mouse_y = e.clientY;
-	mouse_down = true;
-	mouse_count += 1;
+	if(e.button === 0) {
+		mouse_x = e.clientX;
+		mouse_y = e.clientY;
+		mouse_down = true;
+		mouse_count += 1;
+	}
 }
 
 function on_mouse_up(e)
 {
-	mouse_x = e.clientX;
-	mouse_y = e.clientY;
-	mouse_down = false;
-	mouse_count += 1;
+	if(e.button === 0) {
+		mouse_x = e.clientX;
+		mouse_y = e.clientY;
+		mouse_down = false;
+		mouse_count += 1;
+	}
 }
 
 function on_mouse_move(e)
