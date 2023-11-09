@@ -73,17 +73,18 @@ function frame(timestamp)
 		const slider_height = 32;
 
 		// @TODO(tkap, 09/11/2023): use ui
-		const hovered = mouse_collides_rect(slider_x - 10, slider_y, slider_width + 20, slider_height);
-		if(hovered && is_mouse_down()) {
+		const result = ui_button("bpm_slider", slider_x - 10, slider_y, slider_width + 20, slider_height);
+		if(result == e_ui.press) {
 			slider_percent = ilerp(slider_x, slider_x + slider_width, mouse_x);
 			slider_percent = clamp(slider_percent, 0, 1);
 		}
 
-		ctx.fillStyle = "#5D5A53";
+		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#7D7A73", "#3D3A33"], result);
 		ctx.fillRect(slider_x, slider_y, slider_width, slider_height);
+		ctx.fillStyle = "#5D5A53";
 		ctx.fillText(`BPM ${bpm}`, 10, slider_y + slider_height / 2 + font_size / 2);
-		ctx.fillStyle = "#C48559";
-		ctx.fillRect(250 + lerp(0, slider_width - 32, slider_percent), slider_y, 32, slider_height);
+		ctx.fillStyle = map_ui_to_color(["#C48559", "#E4A579", "#A46539"], result);
+		ctx.fillRect(slider_x + lerp(0, slider_width - 32, slider_percent), slider_y, 32, slider_height);
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		bpm slider end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -322,7 +323,7 @@ function hash(text)
 
 function ui_request_hover(id)
 {
-	if(ui.press > 0) { return; }
+	if(ui.press !== 0) { return; }
 	ui.hover = id;
 }
 
