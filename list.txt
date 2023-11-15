@@ -36,6 +36,7 @@ cakez2
 cakezreading
 cakezscream
 cam
+cantread
 chacarron
 chad
 chad2
@@ -46,6 +47,7 @@ clap
 clown
 coffin
 congratulation
+correct
 creeper
 cringe
 curb
@@ -171,6 +173,7 @@ pop
 pop2
 pop3
 problem
+puffer
 punch
 pussy
 reee
