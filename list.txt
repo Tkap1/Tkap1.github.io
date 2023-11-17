@@ -19,6 +19,7 @@ backhere
 badumts
 balls
 banger
+bark
 bastard
 beta
 bigdog
@@ -52,6 +53,7 @@ creeper
 cringe
 curb
 damage
+damage2
 danger
 dcjoin
 dcleave
@@ -99,6 +101,7 @@ goofy
 gotcha
 guys
 hadouken
+halleluja
 hewontshutup
 hihat_closed
 hihat_open
@@ -142,6 +145,7 @@ n7
 nani
 neck
 nelson
+never
 no
 nogold
 noice
@@ -151,6 +155,7 @@ nope
 normies
 nospeak
 notcool
+notcrazy
 nub
 nub2
 nuke
@@ -197,6 +202,7 @@ shutdown
 shutup
 shutup2
 shutup3
+sickjoke
 sitcom
 skype
 slurp
@@ -207,6 +213,7 @@ spank
 spit
 steamy
 stop
+stopit
 stutter
 suction
 surprise
@@ -224,6 +231,7 @@ wegothim
 what
 whatdoyoumean
 whatisthatcalled
+whatwasithinking
 whocares
 wilhelm
 win
@@ -233,6 +241,7 @@ worknow
 worthless
 wow
 wrong
+xfiles
 xp
 yay
 yeah
