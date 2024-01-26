@@ -49,6 +49,7 @@ clap
 clown
 coffin
 congratulation
+cooked
 correct
 creeper
 cringe
@@ -98,6 +99,7 @@ fuckyou
 gachimusic
 garbage
 gasp
+gladiator
 goofy
 gotcha
 guys
