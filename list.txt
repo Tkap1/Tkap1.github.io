@@ -83,6 +83,7 @@ enemy
 error
 eventhat
 ewww
+exterminate
 failed
 failhorn
 fake
@@ -119,6 +120,7 @@ impossiblegame
 indeed
 itjustworks
 jaffa
+jauw
 kick
 kiss
 knife
@@ -178,6 +180,9 @@ perfect
 pipes
 pissed
 playgame
+pogohey
+pogoyawn
+poof
 pop
 pop2
 pop3
@@ -224,6 +229,8 @@ surprise
 tape
 tellus
 thatsme
+tkapain
+tkapsheep
 trash
 tuturu
 useless
@@ -247,6 +254,7 @@ wow
 wrong
 xfiles
 xp
+yahoo
 yay
 yeah
 yeahboy
