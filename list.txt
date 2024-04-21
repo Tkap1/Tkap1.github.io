@@ -26,6 +26,7 @@ beta
 bigdog
 bigritard
 bigtrouble
+blblbl
 bombplanted
 bonk
 boom
@@ -46,7 +47,9 @@ chad2
 chad3
 chad4
 chill
+chip
 clap
+click
 clown
 coffin
 congratulation
@@ -72,6 +75,7 @@ dolphin
 donthelp
 drama
 dramatic
+drink
 drumroll
 duel
 dumbmoron
@@ -102,6 +106,7 @@ gachimusic
 garbage
 gasp
 gladiator
+gold
 goofy
 gotcha
 guys
@@ -169,6 +174,7 @@ nya
 obamna
 objection
 obligatory
+obliterated
 omg
 onichan
 onlygame
@@ -186,12 +192,14 @@ poof
 pop
 pop2
 pop3
+poshiet
 problem
 puffer
 punch
 pussy
 reee
 relate
+remindyou
 right
 ripskin
 ritard
@@ -201,6 +209,7 @@ run
 sad
 sadtrombone
 schlitz
+scooby
 scream
 scream2
 sheesh
@@ -233,6 +242,7 @@ tkapain
 tkapsheep
 trash
 tuturu
+typing
 useless
 verynice
 violence
@@ -243,6 +253,7 @@ what
 whatdoyoumean
 whatisthatcalled
 whatwasithinking
+wheeze
 whocares
 wilhelm
 win
@@ -269,3 +280,4 @@ youretooslow
 youserious
 youtwo
 zawarudo
+zipper
