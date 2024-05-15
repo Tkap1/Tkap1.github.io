@@ -181,6 +181,7 @@ omg
 onichan
 onlygame
 oof
+pachi
 pastyear
 peepo
 penis
@@ -196,6 +197,7 @@ pop2
 pop3
 poshiet
 problem
+profanity
 puffer
 punch
 pussy
@@ -260,6 +262,7 @@ wheeze
 whocares
 wilhelm
 win
+windows
 woo
 woo2
 worknow
