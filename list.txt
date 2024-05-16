@@ -7,6 +7,7 @@ amongus
 answer
 applause
 ara
+arrived
 ask
 athanoara
 athanocakez
@@ -87,6 +88,7 @@ enemy
 error
 eventhat
 ewww
+exclusive
 exterminate
 failed
 failhorn
