@@ -184,6 +184,7 @@ obamna
 objection
 obligatory
 obliterated
+ohno
 omg
 onichan
 onlygame
@@ -223,6 +224,7 @@ schlitz
 scooby
 scream
 scream2
+sexyyeah
 sheesh
 shit
 shitmen
@@ -252,6 +254,7 @@ thatsme
 tkapain
 tkapsheep
 trash
+trippinballs
 tuturu
 typing
 useless
@@ -281,10 +284,12 @@ xp
 yahoo
 yay
 yeah
+yeah2
 yeahboy
 yee
 yeet
 yes
+yohobaby
 youcandoit
 youknowme
 yourealiar
