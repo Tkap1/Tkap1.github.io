@@ -47,6 +47,7 @@ cakez2
 cakezreading
 cakezscream
 cam
+camera
 cantread
 catmad
 chacarron
@@ -203,6 +204,7 @@ nani
 neck
 nelson
 netsexile
+neutral
 never
 nice
 no
@@ -214,6 +216,7 @@ nonono2
 nootnoot
 nope
 normies
+noscope
 nospeak
 notcool
 notcrazy
@@ -306,12 +309,15 @@ taunt
 tellus
 ten
 thatsme
+therewego
 tkapain
 tkapsheep
 trash
+trash2
 trippinballs
 tuturu
 typing
+understand
 useless
 verynice
 violence
