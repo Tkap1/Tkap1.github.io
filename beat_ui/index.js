@@ -41,6 +41,7 @@ let choosing_scroll = 0;
 let wheel = 0;
 let total_time = 0;
 let cam_y = 0;
+let visual_cam_y = 0;
 let ui_id_seen_arr = [];
 
 function init()
@@ -104,8 +105,13 @@ function frame(timestamp)
 	const font_size = 30;
 	const beat_padding = 16;
 
-	ctx.translate(0, -cam_y);
-	mouse_y_this_frame = mouse_y + cam_y;
+	visual_cam_y = lerp(visual_cam_y, cam_y, delta * 10.0);
+	if(Math.abs(visual_cam_y - cam_y) < 1) {
+		visual_cam_y = cam_y;
+	}
+
+	ctx.translate(0, -visual_cam_y);
+	mouse_y_this_frame = mouse_y + visual_cam_y;
 
 	ctx.font = `${font_size}px Arial`;
 
@@ -351,7 +357,7 @@ function frame(timestamp)
 		const x = canvas.width / 2 - width / 2;
 		const y = canvas.height / 2 - height / 2;
 		ctx.save();
-		ctx.translate(0, cam_y);
+		ctx.translate(0, visual_cam_y);
 		ctx.beginPath();
 		ctx.rect(x, y, width, height);
 		ctx.clip();
@@ -376,7 +382,7 @@ function frame(timestamp)
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		choosing sound end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	else {
-		cam_y += wheel * 0.1;
+		cam_y += wheel * 0.2;
 	}
 
 	if(ui.hover.id != 0 && !ui_id_seen_arr.includes(ui.hover.id)) {
