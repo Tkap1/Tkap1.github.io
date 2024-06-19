@@ -471,7 +471,6 @@ function play_column(column)
 
 function copy_loop_to_clipboard(bpm, repeat_count)
 {
-	console.log(repeat_count);
 	let text = `!beat ${repeat_count} ${bpm} `;
 	for(let i = 0; i < max_rows; i += 1) {
 		text += `${file_names[curr_sounds[i]]}`;
