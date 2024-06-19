@@ -598,10 +598,14 @@ function copy_loop_to_clipboard(bpm, repeat_count)
 		}
 	}
 	for(let column_i = 0; column_i < active_columns; column_i += 1) {
+		let value = 0;
 		for(let i = 0; i < max_rows; i += 1) {
 			if(selected[column_i][i]) {
-				text += `${i + 1}`;
+				value |= 1 << i;
 			}
+		}
+		if(value > 0) {
+			text += `${value}`;
 		}
 		if(column_i < active_columns - 1) {
 			text += "-";
