@@ -245,12 +245,12 @@ function frame(timestamp)
 
 		for(let column_i = 0; column_i < active_columns; column_i += 1) {
 			const color_mod = Math.floor(column_i / 4) % 2;
-			for(let i = 0; i < max_rows; i += 1) {
+			for(let row_i = 0; row_i < max_rows; row_i += 1) {
 				const x = start_x + (rect_size + beat_padding) * column_i - beat_scroll;
-				const y = start_y + i * (rect_size + beat_padding);
+				const y = start_y + row_i * (rect_size + beat_padding);
 
 				let color_arr = [rgb(0.365, 0.353, 0.325), rgb(0.992, 0.855, 0.639), rgb(0.176, 0.165, 0.137)];
-				if(selected[column_i][i]) {
+				if(selected[column_i][row_i]) {
 					color_arr = [rgb(0.173, 0.357, 0.220), rgb(0.298, 0.482, 0.345), rgb(0.059, 0.231, 0.094)];
 				}
 				let color_multiplier = 1.0;
@@ -265,14 +265,14 @@ function frame(timestamp)
 					multiply_color(color_arr[color_i], color_multiplier);
 				}
 
-				const result = ui_button(`sound${column_i}${i}`, mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
+				const result = ui_button(`sound${column_i},${row_i}`, mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
 				ctx.fillStyle = rgb_to_hex_str(map_ui_to_color(color_arr, result));
 				ctx.fillRect(x, y, rect_size, rect_size);
 
 				if(result === e_ui.active) {
-					selected[column_i][i] = !selected[column_i][i];
-					if(!playing && selected[column_i][i]) {
-						var audio = new Audio(sound_index_to_path(i));
+					selected[column_i][row_i] = !selected[column_i][row_i];
+					if(!playing && selected[column_i][row_i]) {
+						var audio = new Audio(sound_index_to_path(row_i));
 						audio.play();
 					}
 				}
@@ -407,7 +407,7 @@ function frame(timestamp)
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		save/load end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	{
-		const result = ui_button("beat_scroll", mouse_x, mouse_y_this_frame, 0, 0, canvas.width, canvas.height, 0);
+		const result = ui_button("beat_scroll", mouse_x, mouse_y, 0, 0, canvas.width, canvas.height, 0);
 		if(result == e_ui.press) {
 			beat_scroll -= mouse_x - prev_mouse_x;
 		}
