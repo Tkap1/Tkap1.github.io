@@ -83,6 +83,8 @@ function init()
 function frame(timestamp)
 {
 	delta = (timestamp - last_timestamp) / 1000.0;
+	delta = Math.min(delta, 1.0);
+
 	last_timestamp = timestamp;
 	if(first_frame) {
 		first_frame = false;
@@ -444,8 +446,8 @@ function copy_loop_to_clipboard(bpm)
 {
 	let text = `!beat 1 ${bpm} `;
 	for(let i = 0; i < max_rows; i += 1) {
-		text += `${curr_sounds[i]}`;
-		if(i < 7) {
+		text += `${file_names[curr_sounds[i]]}`;
+		if(i < max_rows - 1) {
 			text += ",";
 		}
 		else {
