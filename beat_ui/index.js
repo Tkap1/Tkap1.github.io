@@ -17,7 +17,7 @@ const ui = {
 	press: {id: 0, layer: 0},
 };
 const file_names = [];
-const max_rows = 8
+const max_rows = 13;
 const max_saves = 10;
 let selected = [];
 let curr_sounds = [];
@@ -79,6 +79,11 @@ function init()
 		curr_sounds[5] = get_sound_index_by_name("pop2");
 		curr_sounds[6] = get_sound_index_by_name("pop3");
 		curr_sounds[7] = get_sound_index_by_name("fart3");
+		curr_sounds[8] = get_sound_index_by_name("n1");
+		curr_sounds[9] = get_sound_index_by_name("n2");
+		curr_sounds[10] = get_sound_index_by_name("n3");
+		curr_sounds[11] = get_sound_index_by_name("n4");
+		curr_sounds[12] = get_sound_index_by_name("b_hardstyle_kick_1");
    })
   .catch((e) => console.error(e));
 
@@ -276,7 +281,7 @@ function frame(timestamp)
 
 		ctx.restore();
 
-		button_y += font_size * 18;
+		button_y += font_size * 28;
 
 	}
 
@@ -364,7 +369,10 @@ function frame(timestamp)
 				save_data.slider_percent = slider_percent;
 				save_data.repeat_slider = repeat_slider;
 				save_data.active_columns = active_columns;
-				save_data.curr_sounds = curr_sounds;
+				save_data.curr_sounds = [];
+				for(let sound_i = 0; sound_i < max_rows; sound_i += 1) {
+					save_data.curr_sounds[sound_i] = file_names[curr_sounds[sound_i]];
+				}
 				save_data.selected = selected;
 				localStorage.setItem(save_i.toString(), JSON.stringify(save_data));
 				do_we_have_save_data_arr[save_i] = true;
@@ -385,7 +393,9 @@ function frame(timestamp)
 					slider_percent = save_data.slider_percent;
 					repeat_slider = save_data.repeat_slider;
 					active_columns = save_data.active_columns;
-					curr_sounds = save_data.curr_sounds;
+					for(let sound_i = 0; sound_i < max_rows; sound_i += 1) {
+						curr_sounds[sound_i] = get_sound_index_by_name(save_data.curr_sounds[sound_i]);
+					}
 					selected = save_data.selected;
 				}
 			}
