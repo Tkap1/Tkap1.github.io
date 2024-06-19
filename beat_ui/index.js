@@ -28,6 +28,7 @@ let mouse_y = 0;
 let prev_mouse_x = 0;
 let prev_mouse_y = 0;
 let slider_percent = 0.25;
+let repeat_slider = 0.2;
 let playing = false;
 let start_timestamp = 0;
 let first_frame = true;
@@ -266,6 +267,32 @@ function frame(timestamp)
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		add or subtract beats end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+	let repeat_count = 0;
+	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		repeat slider start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	{
+		const slider_x = 250;
+		const slider_y = 60;
+		const slider_width = 700;
+		const slider_height = 32;
+
+		const result = ui_button("repeat_slider", slider_x - 10, slider_y, slider_width + 20, slider_height, 1);
+		if(result == e_ui.press) {
+			repeat_slider = ilerp(slider_x, slider_x + slider_width, mouse_x);
+			repeat_slider = clamp(repeat_slider, 0, 1);
+		}
+
+		repeat_count = Math.round(range_lerp(repeat_slider, 0, 1, 1, 5));
+
+		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#7D7A73", "#3D3A33"], result);
+		ctx.fillRect(slider_x, slider_y, slider_width, slider_height);
+		ctx.fillStyle = "#5D5A53";
+		ctx.fillText(`Repeats ${repeat_count}`, 10, slider_y + slider_height / 2 + font_size / 2);
+		ctx.fillStyle = map_ui_to_color(["#C48559", "#E4A579", "#A46539"], result);
+		ctx.fillRect(slider_x + lerp(0, slider_width - 32, repeat_slider), slider_y, 32, slider_height);
+	}
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		repeat slider end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		export button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
 		const x = 300;
@@ -281,7 +308,7 @@ function frame(timestamp)
 		ctx.fillText("Paste into twitch chat!", 10, y + 150);
 
 		if(result === e_ui.active) {
-			copy_loop_to_clipboard(bpm);
+			copy_loop_to_clipboard(bpm, repeat_count);
 		}
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		export button end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -442,9 +469,10 @@ function play_column(column)
 	}
 }
 
-function copy_loop_to_clipboard(bpm)
+function copy_loop_to_clipboard(bpm, repeat_count)
 {
-	let text = `!beat 1 ${bpm} `;
+	console.log(repeat_count);
+	let text = `!beat ${repeat_count} ${bpm} `;
 	for(let i = 0; i < max_rows; i += 1) {
 		text += `${file_names[curr_sounds[i]]}`;
 		if(i < max_rows - 1) {
