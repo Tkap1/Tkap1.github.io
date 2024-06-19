@@ -105,10 +105,7 @@ function frame(timestamp)
 	const font_size = 30;
 	const beat_padding = 16;
 
-	visual_cam_y = lerp(visual_cam_y, cam_y, delta * 10.0);
-	if(Math.abs(visual_cam_y - cam_y) < 1) {
-		visual_cam_y = cam_y;
-	}
+	visual_cam_y = lerp_snap(visual_cam_y, cam_y, delta * 10.0, 1.0);
 
 	ctx.translate(0, -visual_cam_y);
 	mouse_y_this_frame = mouse_y + visual_cam_y;
@@ -382,7 +379,7 @@ function frame(timestamp)
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		choosing sound end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	else {
-		cam_y += wheel * 0.2;
+		cam_y += wheel * 0.3;
 	}
 
 	if(ui.hover.id != 0 && !ui_id_seen_arr.includes(ui.hover.id)) {
@@ -478,6 +475,14 @@ function mouse_collides_rect(mx, my, x, y, sx, sy)
 
 function lerp(a, b, dt)
 {
+	return a + (b - a) * dt;
+}
+
+function lerp_snap(a, b, dt, max_diff)
+{
+	if(Math.abs(a - b) <= max_diff) {
+		return b;
+	}
 	return a + (b - a) * dt;
 }
 
