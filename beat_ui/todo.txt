@@ -1,5 +1,8 @@
 
 
+explain that sounds can be changed
+explain that you can scroll horizontally
+
 UNDO/REDO
 
 handle clicking outside to close choosing sound menu

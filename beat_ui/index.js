@@ -112,39 +112,67 @@ function frame(timestamp)
 	let bpm = range_lerp(slider_percent, 0, 1, 20, 1000);
 	bpm = Math.round(bpm / 5) * 5;
 
+	let button_y = 20;
+
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		bpm slider start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
 		const slider_x = 250;
-		const slider_y = 20;
 		const slider_width = 700;
 		const slider_height = 32;
 
-		const result = ui_button("bpm_slider", mouse_x, mouse_y_this_frame, slider_x - 10, slider_y, slider_width + 20, slider_height, 1);
+		const result = ui_button("bpm_slider", mouse_x, mouse_y_this_frame, slider_x - 10, button_y, slider_width + 20, slider_height, 1);
 		if(result == e_ui.press) {
 			slider_percent = ilerp(slider_x, slider_x + slider_width, mouse_x);
 			slider_percent = clamp(slider_percent, 0, 1);
 		}
 
 		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#7D7A73", "#3D3A33"], result);
-		ctx.fillRect(slider_x, slider_y, slider_width, slider_height);
+		ctx.fillRect(slider_x, button_y, slider_width, slider_height);
 		ctx.fillStyle = "#5D5A53";
-		ctx.fillText(`BPM ${bpm}`, 10, slider_y + slider_height / 2 + font_size / 2);
+		ctx.fillText(`BPM ${bpm}`, 10, button_y + slider_height / 2 + font_size / 2);
 		ctx.fillStyle = map_ui_to_color(["#C48559", "#E4A579", "#A46539"], result);
-		ctx.fillRect(slider_x + lerp(0, slider_width - 32, slider_percent), slider_y, 32, slider_height);
+		ctx.fillRect(slider_x + lerp(0, slider_width - 32, slider_percent), button_y, 32, slider_height);
+
+		button_y += font_size * 1.5;
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		bpm slider end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	let repeat_count = 0;
+	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		repeat slider start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	{
+		const slider_x = 250;
+		const slider_width = 700;
+		const slider_height = 32;
+
+		const result = ui_button("repeat_slider", mouse_x, mouse_y_this_frame, slider_x - 10, button_y, slider_width + 20, slider_height, 1);
+		if(result == e_ui.press) {
+			repeat_slider = ilerp(slider_x, slider_x + slider_width, mouse_x);
+			repeat_slider = clamp(repeat_slider, 0, 1);
+		}
+
+		repeat_count = Math.round(range_lerp(repeat_slider, 0, 1, 1, 5));
+
+		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#7D7A73", "#3D3A33"], result);
+		ctx.fillRect(slider_x, button_y, slider_width, slider_height);
+		ctx.fillStyle = "#5D5A53";
+		ctx.fillText(`Repeats ${repeat_count}`, 10, button_y + slider_height / 2 + font_size / 2);
+		ctx.fillStyle = map_ui_to_color(["#C48559", "#E4A579", "#A46539"], result);
+		ctx.fillRect(slider_x + lerp(0, slider_width - 32, repeat_slider), button_y, 32, slider_height);
+
+		button_y += font_size * 1.5;
+	}
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		repeat slider end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		play button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
 		const x = 100;
-		const y = 100;
 		const rect_size = 48;
-		const result = ui_button("play", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
+		const result = ui_button("play", mouse_x, mouse_y_this_frame, x, button_y, rect_size, rect_size, 1);
 		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
-		ctx.fillRect(x, y, rect_size, rect_size);
+		ctx.fillRect(x, button_y, rect_size, rect_size);
 
 		ctx.fillStyle = "#5D5A53";
-		ctx.fillText("Play", 10, y + font_size / 2 + rect_size / 2);
+		ctx.fillText("Play", 10, button_y + font_size / 2 + rect_size / 2);
 
 		if(result === e_ui.active) {
 			playing = !playing;
@@ -154,6 +182,7 @@ function frame(timestamp)
 				play_column(curr_column);
 			}
 		}
+		button_y += font_size * 2.0;
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		play button end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -170,7 +199,7 @@ function frame(timestamp)
 
 	{
 		const start_x = 250;
-		const start_y = 200;
+		const start_y = button_y;
 
 		// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		play cursor start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 		// if(playing) {
@@ -238,6 +267,8 @@ function frame(timestamp)
 
 		ctx.restore();
 
+		button_y += font_size * 18;
+
 	}
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		add or subtract beats start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -246,79 +277,64 @@ function frame(timestamp)
 		const rect_size = 48;
 
 		{
-			const y = 720;
-			const result = ui_button("add_beats", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
+			const result = ui_button("add_beats", mouse_x, mouse_y_this_frame, x, button_y, rect_size, rect_size, 1);
 			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
-			ctx.fillRect(x, y, rect_size, rect_size);
+			ctx.fillRect(x, button_y, rect_size, rect_size);
 			ctx.fillStyle = "#5D5A53";
-			ctx.fillText("Add beats", 10, y + font_size / 2 + rect_size / 2);
+			ctx.fillText("Add beats", 10, button_y + font_size / 2 + rect_size / 2);
 
 			if(result == e_ui.active) {
 				add_columns();
 			}
+			button_y += font_size * 2.0;
 		}
 
 		{
-			const y = 780;
-			const result = ui_button("remove_beats", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
+			const result = ui_button("remove_beats", mouse_x, mouse_y_this_frame, x, button_y, rect_size, rect_size, 1);
 			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
-			ctx.fillRect(x, y, rect_size, rect_size);
+			ctx.fillRect(x, button_y, rect_size, rect_size);
 			ctx.fillStyle = "#5D5A53";
-			ctx.fillText("Remove beats", 10, y + font_size / 2 + rect_size / 2);
+			ctx.fillText("Remove beats", 10, button_y + font_size / 2 + rect_size / 2);
 
 			if(result == e_ui.active) {
 				remove_columns();
 			}
+			button_y += font_size * 2.0;
 		}
 
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		add or subtract beats end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-	let repeat_count = 0;
-	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		repeat slider start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-	{
-		const slider_x = 250;
-		const slider_y = 60;
-		const slider_width = 700;
-		const slider_height = 32;
-
-		const result = ui_button("repeat_slider", mouse_x, mouse_y_this_frame, slider_x - 10, slider_y, slider_width + 20, slider_height, 1);
-		if(result == e_ui.press) {
-			repeat_slider = ilerp(slider_x, slider_x + slider_width, mouse_x);
-			repeat_slider = clamp(repeat_slider, 0, 1);
-		}
-
-		repeat_count = Math.round(range_lerp(repeat_slider, 0, 1, 1, 5));
-
-		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#7D7A73", "#3D3A33"], result);
-		ctx.fillRect(slider_x, slider_y, slider_width, slider_height);
-		ctx.fillStyle = "#5D5A53";
-		ctx.fillText(`Repeats ${repeat_count}`, 10, slider_y + slider_height / 2 + font_size / 2);
-		ctx.fillStyle = map_ui_to_color(["#C48559", "#E4A579", "#A46539"], result);
-		ctx.fillRect(slider_x + lerp(0, slider_width - 32, repeat_slider), slider_y, 32, slider_height);
-	}
-	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		repeat slider end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 
 	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		export button start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	{
 		const x = 300;
-		const y = 840;
 		const rect_size = 48;
 
-		const result = ui_button("copy to clipboard", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
+		const result = ui_button("copy to clipboard", mouse_x, mouse_y_this_frame, x, button_y, rect_size, rect_size, 1);
 		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
-		ctx.fillRect(x, y, rect_size, rect_size);
+		ctx.fillRect(x, button_y, rect_size, rect_size);
 
 		ctx.fillStyle = "#5D5A53";
-		ctx.fillText("Copy to clipboard", 10, y + font_size / 2 + rect_size / 2);
-		ctx.fillText("Paste into twitch chat!", 10, y + 150);
-
+		ctx.fillText("Copy to clipboard", 10, button_y + font_size / 2 + rect_size / 2);
 		if(result === e_ui.active) {
 			copy_loop_to_clipboard(bpm, repeat_count);
 		}
+
+		button_y += font_size * 3.5;
+
+		ctx.fillText("Paste into twitch chat!", 10, button_y);
+		button_y += font_size * 2.0;
+
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		export button end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	{
+		ctx.fillStyle = "#5D5A53";
+		ctx.fillText("Click and hold below beat squares to scroll horizontally when beat doesn't fit on screen", 10, button_y);
+		button_y += font_size * 2.0;
+		ctx.fillText("Click on sound names to pick a different sound", 10, button_y);
+	}
 
 	{
 		const result = ui_button("beat_scroll", mouse_x, mouse_y_this_frame, 0, 0, canvas.width, canvas.height, 0);
