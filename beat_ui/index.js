@@ -366,6 +366,7 @@ function frame(timestamp)
 
 			if(result == e_ui.active) {
 				let save_data = {};
+				save_data.version = 1;
 				save_data.slider_percent = slider_percent;
 				save_data.repeat_slider = repeat_slider;
 				save_data.active_columns = active_columns;
