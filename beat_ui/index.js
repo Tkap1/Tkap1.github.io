@@ -39,6 +39,9 @@ let choosing_index = 0;
 let choosing_sound = false;
 let choosing_scroll = 0;
 let wheel = 0;
+let total_time = 0;
+let cam_y = 0;
+let ui_id_seen_arr = [];
 
 function init()
 {
@@ -91,6 +94,7 @@ function frame(timestamp)
 		first_frame = false;
 		start_timestamp = timestamp;
 	}
+	total_time += delta;
 
 	ctx.reset();
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -99,6 +103,9 @@ function frame(timestamp)
 	const rect_size = 48;
 	const font_size = 30;
 	const beat_padding = 16;
+
+	ctx.translate(0, -cam_y);
+	mouse_y_this_frame = mouse_y + cam_y;
 
 	ctx.font = `${font_size}px Arial`;
 
@@ -112,7 +119,7 @@ function frame(timestamp)
 		const slider_width = 700;
 		const slider_height = 32;
 
-		const result = ui_button("bpm_slider", slider_x - 10, slider_y, slider_width + 20, slider_height, 1);
+		const result = ui_button("bpm_slider", mouse_x, mouse_y_this_frame, slider_x - 10, slider_y, slider_width + 20, slider_height, 1);
 		if(result == e_ui.press) {
 			slider_percent = ilerp(slider_x, slider_x + slider_width, mouse_x);
 			slider_percent = clamp(slider_percent, 0, 1);
@@ -132,7 +139,7 @@ function frame(timestamp)
 		const x = 100;
 		const y = 100;
 		const rect_size = 48;
-		const result = ui_button("play", x, y, rect_size, rect_size, 1);
+		const result = ui_button("play", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
 		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 		ctx.fillRect(x, y, rect_size, rect_size);
 
@@ -180,7 +187,7 @@ function frame(timestamp)
 		for(let i = 0; i < max_rows; i += 1) {
 			const x = 10;
 			const y = start_y + i * (rect_size + beat_padding) + rect_size / 2 + font_size / 2;
-			const result = ui_button("sound_name" + i, x, y - font_size, 200, font_size * 1.5, 1);
+			const result = ui_button("sound_name" + i, mouse_x, mouse_y_this_frame, x, y - font_size, 200, font_size * 1.5, 1);
 			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#7D7A73", "#2D2A23"], result);
 			ctx.fillText(file_names[curr_sounds[i]], x, y);
 			if(result == e_ui.active) {
@@ -215,7 +222,7 @@ function frame(timestamp)
 					multiply_color(color_arr[color_i], color_multiplier);
 				}
 
-				const result = ui_button(`sound${column_i}${i}`, x, y, rect_size, rect_size, 1);
+				const result = ui_button(`sound${column_i}${i}`, mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
 				ctx.fillStyle = rgb_to_hex_str(map_ui_to_color(color_arr, result));
 				ctx.fillRect(x, y, rect_size, rect_size);
 
@@ -240,7 +247,7 @@ function frame(timestamp)
 
 		{
 			const y = 720;
-			const result = ui_button("add_beats", x, y, rect_size, rect_size, 1);
+			const result = ui_button("add_beats", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
 			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 			ctx.fillRect(x, y, rect_size, rect_size);
 			ctx.fillStyle = "#5D5A53";
@@ -253,7 +260,7 @@ function frame(timestamp)
 
 		{
 			const y = 780;
-			const result = ui_button("remove_beats", x, y, rect_size, rect_size, 1);
+			const result = ui_button("remove_beats", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
 			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 			ctx.fillRect(x, y, rect_size, rect_size);
 			ctx.fillStyle = "#5D5A53";
@@ -275,7 +282,7 @@ function frame(timestamp)
 		const slider_width = 700;
 		const slider_height = 32;
 
-		const result = ui_button("repeat_slider", slider_x - 10, slider_y, slider_width + 20, slider_height, 1);
+		const result = ui_button("repeat_slider", mouse_x, mouse_y_this_frame, slider_x - 10, slider_y, slider_width + 20, slider_height, 1);
 		if(result == e_ui.press) {
 			repeat_slider = ilerp(slider_x, slider_x + slider_width, mouse_x);
 			repeat_slider = clamp(repeat_slider, 0, 1);
@@ -299,7 +306,7 @@ function frame(timestamp)
 		const y = 840;
 		const rect_size = 48;
 
-		const result = ui_button("copy to clipboard", x, y, rect_size, rect_size, 1);
+		const result = ui_button("copy to clipboard", mouse_x, mouse_y_this_frame, x, y, rect_size, rect_size, 1);
 		ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
 		ctx.fillRect(x, y, rect_size, rect_size);
 
@@ -314,7 +321,7 @@ function frame(timestamp)
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		export button end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	{
-		const result = ui_button("beat_scroll", 0, 0, canvas.width, canvas.height, 0);
+		const result = ui_button("beat_scroll", mouse_x, mouse_y_this_frame, 0, 0, canvas.width, canvas.height, 0);
 		if(result == e_ui.press) {
 			beat_scroll -= mouse_x - prev_mouse_x;
 		}
@@ -327,18 +334,20 @@ function frame(timestamp)
 		const height = 600;
 		const x = canvas.width / 2 - width / 2;
 		const y = canvas.height / 2 - height / 2;
+		ctx.save();
+		ctx.translate(0, cam_y);
+		ctx.beginPath();
+		ctx.rect(x, y, width, height);
+		ctx.clip();
 		ctx.fillStyle = "#777777";
-		const result = ui_button("choosing_sound_background", x, y, width, height, 2);
+		const result = ui_button("choosing_sound_background", mouse_x, mouse_y, x, y, width, height, 2);
 		ctx.fillRect(x, y, width, height);
 		choosing_scroll += wheel * 2;
 		choosing_scroll = clamp(choosing_scroll, 0, file_names.length * font_size - height);
 		let text_y = y - choosing_scroll;
 
-		ctx.save();
-		ctx.rect(x, y, width, height);
-		ctx.clip();
 		for(let i = 0; i < file_names.length; i += 1) {
-			const result = ui_button("choosing_sound" + i, x + 10, text_y, width, font_size * 1.5, 3);
+			const result = ui_button("choosing_sound" + i, mouse_x, mouse_y, x + 10, text_y, width, font_size * 1.5, 3);
 			ctx.fillStyle = map_ui_to_color(["#56ADC8", "#76CDE8", "#368DA8"], result);
 			ctx.fillText(file_names[i], x + 10, text_y + font_size);
 			if(result == e_ui.active) {
@@ -350,6 +359,19 @@ function frame(timestamp)
 		ctx.restore();
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		choosing sound end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	else {
+		cam_y += wheel * 0.1;
+	}
+
+	if(ui.hover.id != 0 && !ui_id_seen_arr.includes(ui.hover.id)) {
+		ui.hover.id = 0;
+		ui.hover.layer = 0;
+	}
+	if(ui.press.id != 0 && !ui_id_seen_arr.includes(ui.press.id)) {
+		ui.press.id = 0;
+		ui.press.layer = 0;
+	}
+	ui_id_seen_arr = [];
 
 	ui.prev_hover = {...ui.hover};
 	ui.prev_press = {...ui.press};
@@ -426,10 +448,10 @@ function on_window_resize()
   canvas.height = window.innerHeight;
 }
 
-function mouse_collides_rect(x, y, sx, sy)
+function mouse_collides_rect(mx, my, x, y, sx, sy)
 {
-	return mouse_x > x && mouse_x < x + sx &&
-		mouse_y > y && mouse_y < y + sy;
+	return mx > x && mx < x + sx &&
+		my > y && my < y + sy;
 }
 
 function lerp(a, b, dt)
@@ -520,11 +542,12 @@ function ui_request_press(id, layer)
 	ui.press.layer = layer;
 }
 
-function ui_button(text, x, y, size_x, size_y, layer = 0)
+function ui_button(text, mx, my, x, y, size_x, size_y, layer = 0)
 {
 	let result = e_ui.nothing;
 	const id = hash(text);
-	const hovered = mouse_collides_rect(x, y, size_x, size_y);
+	ui_id_seen_arr.push(id);
+	const hovered = mouse_collides_rect(mx, my, x, y, size_x, size_y);
 	if(hovered) {
 		ui_request_hover(id, layer);
 	}
