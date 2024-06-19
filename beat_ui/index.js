@@ -10,7 +10,6 @@ const e_ui = {
 document.querySelector("#app").innerHTML = `<canvas id="canvas"></canvas>`;
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
-const selected = [];
 const ui = {
 	prev_hover: {id: 0, layer: 0},
 	prev_press: {id: 0, layer: 0},
@@ -18,8 +17,10 @@ const ui = {
 	press: {id: 0, layer: 0},
 };
 const file_names = [];
-const curr_sounds = [];
 const max_rows = 8
+const max_saves = 10;
+let selected = [];
+let curr_sounds = [];
 let active_columns = 0;
 let mouse_count = 0;
 let mouse_down = 0;
@@ -43,6 +44,7 @@ let total_time = 0;
 let cam_y = 0;
 let visual_cam_y = 0;
 let ui_id_seen_arr = [];
+let do_we_have_save_data_arr = [];
 
 function init()
 {
@@ -82,6 +84,10 @@ function init()
 
 	add_columns();
 
+	for(let save_i = 0; save_i < max_saves; save_i += 1) {
+		do_we_have_save_data_arr[save_i] = localStorage.getItem(save_i.toString()) !== null;
+	}
+
 	requestAnimationFrame(frame);
 }
 
@@ -105,7 +111,7 @@ function frame(timestamp)
 	const font_size = 30;
 	const beat_padding = 16;
 
-	visual_cam_y = lerp_snap(visual_cam_y, cam_y, delta * 10.0, 1.0);
+	visual_cam_y = lerp_snap(visual_cam_y, cam_y, delta * 15.0, 1.0);
 
 	ctx.translate(0, -visual_cam_y);
 	mouse_y_this_frame = mouse_y + visual_cam_y;
@@ -337,7 +343,57 @@ function frame(timestamp)
 		ctx.fillText("Click and hold below beat squares to scroll horizontally when beat doesn't fit on screen", 10, button_y);
 		button_y += font_size * 2.0;
 		ctx.fillText("Click on sound names to pick a different sound", 10, button_y);
+		button_y += font_size * 1.5;
 	}
+
+	// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv		save/load start		vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	{
+		const x = 50;
+		const button_width = 200;
+		const button_y_backup = button_y;
+		for(let save_i = 0; save_i < max_saves; save_i += 1) {
+			const result = ui_button(`Save ${save_i + 1}`, mouse_x, mouse_y_this_frame, x, button_y, button_width, rect_size, 1);
+			ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
+			ctx.fillRect(x, button_y, button_width, rect_size);
+			ctx.fillStyle = "#E37F58";
+			ctx.fillText(`Save ${save_i + 1}`, x, button_y + font_size / 2 + rect_size / 2);
+			button_y += font_size * 2.0;
+
+			if(result == e_ui.active) {
+				let save_data = {};
+				save_data.slider_percent = slider_percent;
+				save_data.repeat_slider = repeat_slider;
+				save_data.active_columns = active_columns;
+				save_data.curr_sounds = curr_sounds;
+				save_data.selected = selected;
+				localStorage.setItem(save_i.toString(), JSON.stringify(save_data));
+				do_we_have_save_data_arr[save_i] = true;
+			}
+		}
+		button_y = button_y_backup;
+
+		for(let save_i = 0; save_i < max_saves; save_i += 1) {
+			if(do_we_have_save_data_arr[save_i]) {
+				const result = ui_button(`Load ${save_i + 1}`, mouse_x, mouse_y_this_frame, x + button_width * 1.1, button_y, button_width, rect_size, 1);
+				ctx.fillStyle = map_ui_to_color(["#5D5A53", "#9D9A93", "#2D2A23"], result);
+				ctx.fillRect(x + button_width * 1.1, button_y, button_width, rect_size);
+				ctx.fillStyle = "#E37F58";
+				ctx.fillText(`Load ${save_i + 1}`, x + button_width * 1.1, button_y + font_size / 2 + rect_size / 2);
+
+				if(result == e_ui.active) {
+					const save_data = JSON.parse(localStorage.getItem(save_i.toString()));
+					slider_percent = save_data.slider_percent;
+					repeat_slider = save_data.repeat_slider;
+					active_columns = save_data.active_columns;
+					curr_sounds = save_data.curr_sounds;
+					selected = save_data.selected;
+				}
+			}
+			button_y += font_size * 2.0;
+
+		}
+	}
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		save/load end		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	{
 		const result = ui_button("beat_scroll", mouse_x, mouse_y_this_frame, 0, 0, canvas.width, canvas.height, 0);
