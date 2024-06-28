@@ -139,6 +139,7 @@ eat
 emodamage
 enemy
 error
+evano
 eventhat
 everyone
 ewww
