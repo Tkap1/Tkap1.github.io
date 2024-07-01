@@ -77,6 +77,8 @@ b_snare_5
 b_wahwah_1
 cakez
 cakez2
+cakez3
+cakez4
 cakezdick
 cakezreading
 cakezscream
