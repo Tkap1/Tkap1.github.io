@@ -101,6 +101,7 @@ chrisu
 clap
 click
 clown
+cmonguys
 cmonman
 coffin
 congratulation
@@ -274,6 +275,7 @@ nottoberacist
 nub
 nub2
 nuke
+nullptr
 nya
 obamna
 objection
