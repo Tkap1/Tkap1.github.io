@@ -1,5 +1,6 @@
 20minutes
 28stabwounds
+adrian
 ads1
 ads2
 ads3
@@ -369,6 +370,7 @@ ten
 thatsme
 therewego
 tkapain
+tkapoi
 tkapsheep
 trash
 trash2
