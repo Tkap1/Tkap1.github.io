@@ -350,6 +350,7 @@ sniff
 software
 sorry
 sorryforwhat
+soulbounds
 soulgenerics
 soulhow
 spaghet
