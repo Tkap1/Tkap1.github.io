@@ -353,6 +353,9 @@ sorryforwhat
 soulbounds
 soulgenerics
 soulhow
+soulphone
+soulr
+soultkap
 spaghet
 spank
 spit
