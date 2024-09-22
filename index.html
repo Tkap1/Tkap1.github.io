@@ -1723,6 +1723,11 @@ button.textContent = "shot";
 button.style.width= "200px"
 d.appendChild(button);
 button = document.createElement("BUTTON");
+button.onclick=() => callback("shot2.mp3");
+button.textContent = "shot2";
+button.style.width= "200px"
+d.appendChild(button);
+button = document.createElement("BUTTON");
 button.onclick=() => callback("shutdown.mp3");
 button.textContent = "shutdown";
 button.style.width= "200px"

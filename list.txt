@@ -339,6 +339,7 @@ sheesh
 shit
 shitmen
 shot
+shot2
 shutdown
 shutup
 shutup2
