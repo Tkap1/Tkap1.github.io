@@ -236,6 +236,7 @@ meow2
 misunderstood
 mods
 moo
+moreaware
 munch
 murloc
 myman
@@ -350,6 +351,7 @@ sniff
 software
 sorry
 sorryforwhat
+soulang
 soulbounds
 soulgenerics
 soulhow
