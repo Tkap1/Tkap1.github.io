@@ -4,6 +4,7 @@ adrian
 ads1
 ads2
 ads3
+advice
 again
 aha
 ahhh
@@ -28,6 +29,7 @@ away
 aww
 ayaya
 backhere
+bad
 badreader
 badumts
 balls
@@ -134,6 +136,7 @@ dkp
 dodgeagain
 dolphin
 donotcome
+dontdothat
 donthelp
 drama
 dramatic
