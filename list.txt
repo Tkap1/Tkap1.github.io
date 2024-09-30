@@ -108,6 +108,7 @@ clown
 cmonguys
 cmonman
 coffin
+compiler
 congratulation
 cooked
 correct
