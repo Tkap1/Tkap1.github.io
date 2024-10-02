@@ -182,6 +182,7 @@ garbage
 garbage2
 gasp
 gasp2
+getaway
 gladiator
 gold
 goofy
@@ -304,6 +305,7 @@ pastyear
 peepo
 penis
 perfect
+pimp
 pipes
 pissed
 playgame
@@ -406,6 +408,7 @@ wellberightback
 whassup
 what
 what2
+whatareyoudoing
 whatdoyoumean
 whatisthatcalled
 whatwasithinking
