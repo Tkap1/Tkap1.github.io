@@ -366,6 +366,7 @@ soulang
 soulbounds
 soulgenerics
 soulhow
+souljavier
 soulphone
 soulr
 soultkap
