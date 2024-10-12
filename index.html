@@ -753,6 +753,11 @@ button.textContent = "drink";
 button.style.width= "200px"
 d.appendChild(button);
 button = document.createElement("BUTTON");
+button.onclick=() => callback("drugs.mp3");
+button.textContent = "drugs";
+button.style.width= "200px"
+d.appendChild(button);
+button = document.createElement("BUTTON");
 button.onclick=() => callback("drumroll.mp3");
 button.textContent = "drumroll";
 button.style.width= "200px"
