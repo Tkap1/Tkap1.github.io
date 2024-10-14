@@ -6,6 +6,7 @@ ads2
 ads3
 advice
 again
+agree
 aha
 ahhh
 airhorn
@@ -156,6 +157,7 @@ eat
 emodamage
 enemy
 error
+evanbox
 evano
 eventhat
 everyone
@@ -220,7 +222,9 @@ impossible
 impossiblegame
 indeed
 ismathrelatedtoscience
+itakimasu
 itjustworks
+itto
 jackoff
 jaffa
 jauw
@@ -232,6 +236,8 @@ kree
 later
 laugh
 laugh2
+laugh3
+laugh4
 lego
 lemmesmash
 letmein
@@ -267,6 +273,7 @@ n7
 n8
 n9
 nani
+ne
 neck
 nelson
 netsexile
@@ -297,6 +304,7 @@ obamna
 objection
 obligatory
 obliterated
+ohayo
 ohno
 omg
 onceagainasking
@@ -437,10 +445,12 @@ woo2
 worknow
 worthless
 wow
+wowwhatabileofshit
 wrong
 xfiles
 xp
 yahoo
+yatta
 yay
 yeah
 yeah2
@@ -450,6 +460,9 @@ yee
 yeet
 yes
 yohobaby
+yoroshiku
+yoroshikune
+yosha
 youcandoit
 youknowme
 yourealiar
