@@ -383,6 +383,7 @@ soulhow
 souljavier
 soulphone
 soulr
+soultalk
 soulthatshow
 soultkap
 soultoxic
