@@ -381,6 +381,7 @@ software
 sorry
 sorryforwhat
 soulang
+soulbool
 soulbounds
 soulfan
 soulfuck
