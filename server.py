@@ -1,5 +1,3 @@
-import http.server
-from http.server import *
 import glob
 import shutil
 import os
@@ -14,10 +12,15 @@ class s_builder:
 		self.text += s + "\n"
 #------------------------------------
 
-def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
-	files = glob.glob("C:/Users/34687/Desktop/Dev/Python/twitch_bot/sounds/*.mp3")
+def run():
+	files = glob.glob("sounds/*.mp3")
+
+	# @Note(tkap, 22/11/2024): This contains filename + extension (no full path)
 	list_of_files = []
+
+	# @Note(tkap, 22/11/2024): This contains filename without extension (no full path)
 	list_str = ""
+
 	for f in files:
 		target = os.getcwd()
 		slash_index = f.rfind("\\")
@@ -25,7 +28,7 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
 			slash_index = f.rfind("/")
 		filename = f[slash_index + 1: ]
 		target += "/" + filename
-		shutil.copyfile(f, target)
+		# shutil.copyfile(f, target)
 		list_of_files.append(filename)
 		list_str += filename[:filename.find(".mp3")] + "\n"
 
@@ -58,9 +61,7 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
 	b.add_line("let button = undefined")
 	for f in list_of_files:
 		b.add_line("button = document.createElement(\"BUTTON\");")
-		# b.add_line("button.addEventListener(\"click\", () => callback(\"%s\"));" % f)
-		# b.add_line("button.onclick=callback(%s);" % f)
-		b.add_line("button.onclick=() => callback(\"%s\");" % f)
+		b.add_line("button.onclick=() => callback(\"sounds/%s\");" % f)
 		b.add_line("button.textContent = \"%s\";" % f[0:f.find(".mp3")])
 		b.add_line("button.style.width= \"200px\"")
 		# b.add_line("document.body.appendChild(button);")
@@ -73,10 +74,6 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
 
 	with open("index.html", "w") as f:
 		f.write(b.text)
-
-	# server_address = ('', 8000)
-	# httpd = server_class(server_address, handler_class)
-	# httpd.serve_forever()
 #------------------------------------
 
 run()
