@@ -272,7 +272,7 @@ function frame(timestamp)
 				if(result === e_ui.active) {
 					selected[column_i][row_i] = !selected[column_i][row_i];
 					if(!playing && selected[column_i][row_i]) {
-						var audio = new Audio(`/sounds/${sound_index_to_path(row_i)}`);
+						var audio = new Audio(sound_index_to_path(row_i));
 						audio.play();
 					}
 				}
@@ -579,7 +579,7 @@ function play_column(column)
 {
 	for(let i = 0; i < max_rows; i += 1) {
 		if(selected[column][i]) {
-			var audio = new Audio(`/sounds/${sound_index_to_path(i)}`);
+			var audio = new Audio(sound_index_to_path(i));
 			audio.play();
 		}
 	}
@@ -737,7 +737,7 @@ function get_sound_index_by_name(name)
 function sound_index_to_path(index)
 {
 	console.assert(index >= 0 && index < max_rows);
-	return "../" + file_names[curr_sounds[index]] + ".mp3";
+	return "../sounds/" + file_names[curr_sounds[index]] + ".mp3";
 }
 
 init();
