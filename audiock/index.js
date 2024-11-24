@@ -129,7 +129,6 @@ function onChangeAudioSelect() {
 		let audioTracks = document.getElementById("audio-tracks").tBodies[0];
 		let tableRow = createAudioRow(obj, newRegion.id, newRegion.start, newRegion.end);
 		tableRow.dataset.soundname = obj.name;
-		console.log(tableRow);
 		audioTracks.appendChild(tableRow);
 	});
 	obj.wavesurfer.on('region-update-end', function(newRegion) {
