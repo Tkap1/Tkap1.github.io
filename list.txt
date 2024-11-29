@@ -414,6 +414,7 @@ sorryforwhat
 soulang
 soulbool
 soulbounds
+soulcpp
 soulfan
 soulfuck
 soulgenerics
