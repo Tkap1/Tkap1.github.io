@@ -5,6 +5,29 @@ let processedAudio;
 
 let wavesurfer_arr = []
 
+function init()
+{
+	fetch("../list.txt")
+  .then((res) => res.text())
+  .then((text) => {
+		let lines = text.split("\r\n");
+
+		// @Note(tkap, 09/11/2023): Without this it works on my pc, but not on gitub. I guess the fetch keeps \r on my pc
+		// but not on github??
+		if(lines.length <= 1) {
+			lines = text.split("\n");
+		}
+		for(let i = 0; i < lines.length; i += 1) {
+			const sound_select = document.getElementById("sound-select");
+			const new_element = document.createElement("option");
+			new_element.innerText = lines[i];
+			new_element.value = `${lines[i]}.mp3`;
+			sound_select.appendChild(new_element);
+		}
+   })
+  .catch((e) => console.error(e));
+}
+
 function makeElement(elementType, attrs){
 	const elem = document.createElement(elementType);
 	for (const [key, value] of Object.entries(attrs)){
@@ -163,3 +186,5 @@ function copy_to_clipboard()
 
 	navigator.clipboard.writeText(output);
 }
+
+init();
