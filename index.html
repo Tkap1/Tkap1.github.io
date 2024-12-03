@@ -243,6 +243,11 @@ button.textContent = "balls";
 button.style.width= "200px"
 d.appendChild(button);
 button = document.createElement("BUTTON");
+button.onclick=() => callback("sounds/bang.mp3");
+button.textContent = "bang";
+button.style.width= "200px"
+d.appendChild(button);
+button = document.createElement("BUTTON");
 button.onclick=() => callback("sounds/banger.mp3");
 button.textContent = "banger";
 button.style.width= "200px"

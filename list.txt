@@ -43,6 +43,7 @@ bad
 badreader
 badumts
 balls
+bang
 banger
 bark
 bastard
