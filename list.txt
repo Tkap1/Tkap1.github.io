@@ -439,6 +439,7 @@ software
 sorry
 sorryforwhat
 soulang
+soulbitch
 soulbool
 soulbounds
 soulcpp
