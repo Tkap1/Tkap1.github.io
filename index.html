@@ -753,6 +753,11 @@ button.textContent = "cheatcode";
 button.style.width= "200px"
 d.appendChild(button);
 button = document.createElement("BUTTON");
+button.onclick=() => callback("sounds/cheated.mp3");
+button.textContent = "cheated";
+button.style.width= "200px"
+d.appendChild(button);
+button = document.createElement("BUTTON");
 button.onclick=() => callback("sounds/chernodisgusting.mp3");
 button.textContent = "chernodisgusting";
 button.style.width= "200px"
