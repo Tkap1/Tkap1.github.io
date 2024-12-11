@@ -328,7 +328,6 @@ moreaware
 moregold
 munch
 murloc
-music
 myman
 mynamejeff
 n1
@@ -499,6 +498,7 @@ tkapcpp
 tkapgood
 tkapguys
 tkapitjustworks
+tkapmusic
 tkapoi
 tkappush
 tkapscream
