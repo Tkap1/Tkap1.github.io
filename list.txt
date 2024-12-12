@@ -183,6 +183,7 @@ cooked
 correct
 cpp
 creeper
+crickets
 cringe
 curb
 damage
