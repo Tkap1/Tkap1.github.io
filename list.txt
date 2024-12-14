@@ -177,6 +177,7 @@ coffeephone
 coffeesing
 coffeesneeze
 coffin
+comment
 compiler
 congratulation
 coochie
@@ -224,6 +225,7 @@ dumbmoron
 dundundun
 dungeonmaster
 eat
+ecs
 eee
 eeee
 emodamage
