@@ -357,8 +357,10 @@ never
 nhanbofa
 nhancancel
 nhancoochie
+nhandrama
 nhanicant
 nhanjack
+nhanlaugh
 nhanleave
 nhanno
 nhanpoorsperms
@@ -366,6 +368,7 @@ nhanraid
 nhanrelieve
 nhansex
 nhanthankyou
+nhanwho
 nice
 no
 nogodpleaseno
