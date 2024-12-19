@@ -21,7 +21,6 @@ amongus
 answer
 applause
 ara
-arnold
 arrived
 aruseuscakez
 aruseuscakez2
@@ -354,6 +353,7 @@ nelson
 netsexile
 neutral
 never
+nhanarnold
 nhanbofa
 nhancancel
 nhancoochie
