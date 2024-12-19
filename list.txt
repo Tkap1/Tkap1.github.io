@@ -170,12 +170,14 @@ coffeecpp
 coffeedrama
 coffeegachi
 coffeejavier
+coffeeman
 coffeeobjection
 coffeeok
 coffeephone
 coffeepreach
 coffeesing
 coffeesneeze
+coffeethink
 coffeetrue
 coffin
 comment
