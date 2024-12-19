@@ -327,7 +327,6 @@ mcexp
 meow
 meow2
 misunderstood
-mods
 moo
 moreaware
 moregold
@@ -507,6 +506,7 @@ tkapcpp
 tkapgood
 tkapguys
 tkapitjustworks
+tkapmods
 tkapmusic
 tkapoi
 tkapok
