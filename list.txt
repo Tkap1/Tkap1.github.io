@@ -507,6 +507,7 @@ tkapbad
 tkapbad2
 tkapcakez
 tkapcmake
+tkapcompiler
 tkapcpp
 tkapgood
 tkapguys
