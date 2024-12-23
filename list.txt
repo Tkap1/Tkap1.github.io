@@ -307,7 +307,6 @@ ismathrelatedtoscience
 itakimasu
 itto
 jaffa
-jauw
 kick
 kiss
 knife
@@ -417,6 +416,7 @@ pimp
 pipes
 playgame
 pogohey
+pogojauw
 pogooof
 pogoyawn
 poorkids
