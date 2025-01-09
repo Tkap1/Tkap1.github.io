@@ -47,7 +47,6 @@ aware
 away
 aww
 ayaya
-azenris
 backhere
 bad
 badreader
@@ -111,6 +110,7 @@ cakez4
 cakez5
 cakez6
 cakezballs
+cakezbig
 cakezblizzard
 cakezburp
 cakezcalled
@@ -126,6 +126,7 @@ cakezlucky
 cakezno
 cakezobligatory
 cakezohyeah
+cakezpastyear
 cakezpissed
 cakezpoof
 cakezpussy
@@ -307,6 +308,7 @@ ismathrelatedtoscience
 itakimasu
 itto
 jaffa
+jonsyntax
 jontkap
 kick
 kiss
@@ -409,7 +411,6 @@ orshycpp
 orshyrap
 over9000
 pachi
-pastyear
 peepo
 penis
 perfect
