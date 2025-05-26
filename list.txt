@@ -123,6 +123,7 @@ cakezdick
 cakezdick2
 cakezexcuseme
 cakezforloop
+cakezhateyou
 cakezknow
 cakezlaugh
 cakezlucky
@@ -535,6 +536,7 @@ tkaprally
 tkapscream
 tkapsheep
 tkapsheep2
+tkapshutup
 tkapsing
 tkapsing2
 tkapsneeze
