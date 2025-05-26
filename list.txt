@@ -109,6 +109,7 @@ cakez3things
 cakez4
 cakez5
 cakez6
+cakezartstyle
 cakezballs
 cakezbig
 cakezblizzard
@@ -116,6 +117,7 @@ cakezburp
 cakezcalled
 cakezcontinue
 cakezcoom
+cakezcopying
 cakezdemo
 cakezdick
 cakezdick2
