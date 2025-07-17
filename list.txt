@@ -127,6 +127,7 @@ cakezforloop
 cakezhateyou
 cakezknow
 cakezlaugh
+cakezleave
 cakezlucky
 cakezno
 cakezobligatory
@@ -308,7 +309,6 @@ holyshit
 howdareyou
 hugebitch
 huh
-idontunderstand
 ifuckinghateit
 imaginemoving
 imagnome
@@ -383,6 +383,7 @@ nhancancel
 nhancoochie
 nhandrama
 nhanicant
+nhanidontunderstand
 nhanjack
 nhanlaugh
 nhanleave
