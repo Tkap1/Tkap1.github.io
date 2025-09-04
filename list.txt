@@ -499,6 +499,7 @@ soulbool
 soulbounds
 soulcpp
 soulfan
+soulfoam
 soulfuck
 soulgenerics
 soulhow
