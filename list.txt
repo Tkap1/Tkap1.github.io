@@ -70,7 +70,6 @@ break
 brother
 bruh
 buffinges
-bug
 burgir
 bust
 b_808_1
@@ -113,6 +112,7 @@ cakezartstyle
 cakezballs
 cakezbig
 cakezblizzard
+cakezbug
 cakezburp
 cakezcalled
 cakezcoming
@@ -160,6 +160,7 @@ camera
 capuche
 carl
 caseyanime
+caseyitdepends
 catmad
 chacarron
 chad
@@ -549,6 +550,7 @@ tkapneck
 tkapoi
 tkapok
 tkappush
+tkapr
 tkaprally
 tkapscream
 tkapsheep
