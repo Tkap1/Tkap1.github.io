@@ -451,6 +451,7 @@ playgame
 pogohey
 pogojauw
 pogooof
+pogoyahoo
 pogoyawn
 poorkids
 pop
@@ -607,7 +608,6 @@ wowwhatapileofshit
 wrong
 xfiles
 xp
-yahoo
 yatta
 yay
 yeah
