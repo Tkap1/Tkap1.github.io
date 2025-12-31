@@ -185,6 +185,7 @@ coffeeazen
 coffeebug
 coffeecakez
 coffeecollector
+coffeecough
 coffeecpp
 coffeedrama
 coffeedumb
