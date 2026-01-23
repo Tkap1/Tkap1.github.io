@@ -207,6 +207,7 @@ coffeesing2
 coffeesing3
 coffeesing4
 coffeesneeze
+coffeesree
 coffeethink
 coffeetkdev
 coffeetrue
