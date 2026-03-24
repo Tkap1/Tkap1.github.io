@@ -280,7 +280,6 @@ evancakez
 evano
 eventhat
 everyone
-ewww
 exclusive
 exterminate
 failed
@@ -574,6 +573,8 @@ tkapcakez
 tkapcmake
 tkapcompiler
 tkapcpp
+tkapew
+tkapew2
 tkapgood
 tkapguys
 tkapitjustworks
