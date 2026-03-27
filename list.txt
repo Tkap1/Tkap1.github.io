@@ -566,6 +566,10 @@ tape
 taunt
 tellus
 ten
+terryglobal
+terrylinux
+terryrude
+terrysimplicity
 therewego
 tkapain
 tkapbad
