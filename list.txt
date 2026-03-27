@@ -566,6 +566,8 @@ tape
 taunt
 tellus
 ten
+terrycmd
+terryfuckyou
 terryglobal
 terrylinux
 terryrude
