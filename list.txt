@@ -574,6 +574,7 @@ terrylinux
 terryrude
 terrysimplicity
 therewego
+tkapage
 tkapain
 tkapbad
 tkapbad2
@@ -581,6 +582,7 @@ tkapblind
 tkapcakez
 tkapcmake
 tkapcompiler
+tkapcontext
 tkapcpp
 tkapew
 tkapew2
