@@ -222,7 +222,6 @@ coffeetkdev
 coffeetrue
 coffin
 comment
-compiler
 congratulation
 coochie
 cooked
@@ -384,6 +383,8 @@ mcexp
 meal
 meow
 meow2
+mikecompiler
+mikenonsense
 misunderstood
 moo
 moreaware
