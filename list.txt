@@ -70,7 +70,6 @@ bonk
 boom
 boynextdoor
 break
-brother
 bruh
 buffinges
 burgir
@@ -581,6 +580,7 @@ tkapain
 tkapbad
 tkapbad2
 tkapblind
+tkapbrother
 tkapcakez
 tkapcmake
 tkapcompiler
