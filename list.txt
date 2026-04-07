@@ -524,6 +524,8 @@ shutup2
 shutup3
 shutup4
 sickjoke
+simongrief
+simonmadness
 sitcom
 skype
 slurp
