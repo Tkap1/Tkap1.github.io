@@ -607,6 +607,8 @@ tkapmods
 tkapmusic
 tkapneck
 tkapnever
+tkapno1
+tkapno2
 tkapoi
 tkapok
 tkappush
