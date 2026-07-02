@@ -591,6 +591,7 @@ terryglobal
 terrylinux
 terryrude
 terrysimplicity
+testthat
 therewego
 tkapage
 tkapain
@@ -646,6 +647,7 @@ understand
 understand2
 understanding
 useless
+veryimpressive
 verynice
 violence
 wasted
