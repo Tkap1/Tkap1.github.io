@@ -363,6 +363,7 @@ jonopenglbad
 jonopenglstate
 jonrelease
 jonsyntax
+jonthing
 jontkap
 jonweb
 jonwebr
@@ -542,6 +543,7 @@ shutup4
 sickjoke
 simongrief
 simonmadness
+simonmoney
 sitcom
 skype
 slurp
@@ -549,7 +551,6 @@ sniff
 somalia
 sorry
 sorryforwhat
-sorrymoney
 soulang
 soulbitch
 soulbool
