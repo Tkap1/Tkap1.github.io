@@ -60,6 +60,7 @@ bang
 banger
 bark
 bastard
+beggars
 beta
 bigdog
 bigritard
@@ -285,6 +286,7 @@ eventhat
 everyone
 exclusive
 exterminate
+fah
 failed
 failhorn
 fake
