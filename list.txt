@@ -52,7 +52,6 @@ away
 aww
 ayaya
 backhere
-bad
 badreader
 badumts
 balls
@@ -230,7 +229,6 @@ coffeethink
 coffeetkdev
 coffeetrue
 coffin
-comment
 congratulation
 coochie
 cooked
@@ -539,7 +537,9 @@ scream2
 scream3
 scream4
 sexyyeah
+shawnbad
 shawncode
+shawncomment
 sheesh
 shit
 shitmen
