@@ -263,7 +263,6 @@ dkp
 dodgeagain
 dolphin
 donotcome
-dontdothat
 donthelp
 dota
 draco
@@ -475,6 +474,7 @@ obliterated
 ohayo
 ohno
 omg
+omgbruh
 onceagainasking
 onichan
 onichan2
@@ -540,6 +540,7 @@ shawnadvice
 shawnbad
 shawncode
 shawncomment
+shawndontdothat
 sheesh
 shit
 shitmen
