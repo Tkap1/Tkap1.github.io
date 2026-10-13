@@ -615,6 +615,7 @@ tkapage
 tkapain
 tkapbad
 tkapbad2
+tkapbigot
 tkapblind
 tkapbrother
 tkapbruh
